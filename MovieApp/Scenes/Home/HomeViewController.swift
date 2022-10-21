@@ -11,26 +11,34 @@ import SnapKit
 private enum HomeViewConstant {
     static let cellReuseIdentifier = "MovieTableViewCell"
     static let navigationBarTitle = "Movies"
-    static let titleTextAttributesColor = #colorLiteral(red: 0.1097382233, green: 0.6288500428, blue: 0.6367314458, alpha: 1)
-    static let backgroundColor = UIColor.white
+    static let titleTextAttributesColor = Color.appBase
+    static let backgroundColor = Color.white
+    static let emptyLabelText = "No Found Movie"
+    static let searchText = "Search Movie"
+    static let fontSize = 20
 }
 
 class HomeViewController: UIViewController, UISearchControllerDelegate {
     
-    private lazy var searchVC = UISearchController(searchResultsController: nil)
-    
+    private lazy var searchVC: UISearchController = {
+        let searchVC = UISearchController(searchResultsController: nil)
+        searchVC.searchBar.translatesAutoresizingMaskIntoConstraints = false
+        return searchVC
+    }()
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
-    private lazy var label: UILabel = {
+    private lazy var emptyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = true
         label.font = FuturaFont.bold.of(size: 16)
         label.textColor = HomeViewConstant.titleTextAttributesColor
         label.textAlignment = .left
-        label.text = "No Found Movie"
+        label.text = HomeViewConstant.emptyLabelText
         label.isHidden = true
         return label
     }()
@@ -39,7 +47,6 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.layoutIfNeeded()
         setUpUI()
     }
     
@@ -52,9 +59,10 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
         navigationItem.hidesBackButton = true
         navigationItem.searchController = searchVC
         searchVC.searchBar.delegate = self
-        searchVC.searchBar.placeholder = "Search Movie"
+        searchVC.searchBar.placeholder = HomeViewConstant.searchText
         navigationItem.title = HomeViewConstant.navigationBarTitle
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: HomeViewConstant.titleTextAttributesColor]
+        let attributes = [NSAttributedString.Key.foregroundColor:  HomeViewConstant.titleTextAttributesColor, NSAttributedString.Key.font : UIFont(name: FuturaFont.bold.rawValue, size: CGFloat(HomeViewConstant.fontSize))!]
+        self.navigationController?.navigationBar.titleTextAttributes = attributes as [NSAttributedString.Key : Any]
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
@@ -72,8 +80,8 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
         tableView.separatorStyle = .none
         tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: HomeViewConstant.cellReuseIdentifier)
         
-        self.view.addSubview(label)
-        label.snp.makeConstraints { make in
+        self.view.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
     }
@@ -106,15 +114,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.loadIndicatorForApiRequestCompleted()
+        searchVC.searchBar.isUserInteractionEnabled = false
         guard let text = searchBar.text, !text.isEmpty else { return }
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
             NetworkManager.shared.moviesBySearchFetched(movieSearchTitle: text, completion: { [weak self] data in
                 self?.dissmissIndicatorForApiRequestCompleted()
+                self!.searchVC.searchBar.isUserInteractionEnabled = true
                 if let data = data, text.count != 0  {
-                    self?.label.isHidden = true
+                    self?.emptyLabel.isHidden = true
                     self?.searchList = data
                 } else {
-                    self?.label.isHidden = false
+                    self?.emptyLabel.isHidden = false
                     self?.searchList.removeAll()
                 }
                 DispatchQueue.main.async {
@@ -129,7 +139,7 @@ extension HomeViewController: UISearchBarDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        label.isHidden = true
+        emptyLabel.isHidden = true
         searchList.removeAll()
         tableView.reloadData()
     }
@@ -156,12 +166,8 @@ extension HomeViewController {
     
     func selectedMovie(imdbID: String) {
         NetworkManager.shared.movieDetailsFetched(movieIMBID: imdbID) { result in
-            guard let result = result else {
-                return
-            }
-            let vc = DetailViewController(movieDetailResult: result)
-            self.navigationController?.pushViewController(vc, animated: true)
+            guard let result = result else { return }
+            self.openView(viewController: DetailViewController(movieDetailResult: result))
         }
     }
-
 }

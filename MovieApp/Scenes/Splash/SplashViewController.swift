@@ -20,7 +20,7 @@ final class SplashViewController: UIViewController {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.1097382233, green: 0.6288500428, blue: 0.6367314458, alpha: 1)
+        label.textColor = Color.appBase
         label.font = FuturaFont.condensedExtraBold.of(size: 28)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,9 +39,8 @@ final class SplashViewController: UIViewController {
 
 extension SplashViewController: SplashViewInterface {
     func setViewColor() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color.white
     }
-    
     func setUpLabel() {
         self.label.isHidden = false
         self.view.addSubview(label)
@@ -58,7 +57,7 @@ extension SplashViewController: SplashViewInterface {
     func present() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             let vc = HomeViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: false)
         }
     }
     

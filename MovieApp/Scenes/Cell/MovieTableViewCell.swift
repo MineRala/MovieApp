@@ -8,12 +8,18 @@
 import UIKit
 import Kingfisher
 
+private enum MovieTableViewCellConstnt {
+    static let viewColor = Color.cellBackgrounColor
+}
+
+
 final class MovieTableViewCell: UITableViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.8431372549, green: 0.8431372549, blue: 0.8431372549, alpha: 1)
+        view.backgroundColor = MovieTableViewCellConstnt.viewColor
         view.layer.borderWidth = 1
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
         view.layer.cornerRadius = 12
         return view
@@ -21,7 +27,7 @@ final class MovieTableViewCell: UITableViewCell {
 
     private lazy var posterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
@@ -30,7 +36,7 @@ final class MovieTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.bold.of(size: 16)
         label.textColor = .black
         label.textAlignment = .left
@@ -41,7 +47,7 @@ final class MovieTableViewCell: UITableViewCell {
     
     private lazy var typeLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.condesedMedium.of(size: 16)
         label.textColor = .black
         label.textAlignment = .left
@@ -50,7 +56,7 @@ final class MovieTableViewCell: UITableViewCell {
     
     private lazy var yearLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = true
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.medium.of(size: 12)
         label.textColor = .black
         label.textAlignment = .left
@@ -59,6 +65,7 @@ final class MovieTableViewCell: UITableViewCell {
     
     private lazy var typeView: UIView = {
         let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .gray.withAlphaComponent(0.5)
         view.layer.cornerRadius = 12
         
@@ -139,7 +146,11 @@ extension MovieTableViewCell {
 //MARK: - Set Cell
 extension MovieTableViewCell {
     func setCell(model: Search) {
-        posterImageView.kf.setImage(with: URL(string: model.poster))
+        if model.poster == "N/A" {
+            posterImageView.image = UIImage(named: "NoImage")
+        } else {
+            posterImageView.kf.setImage(with: URL(string: model.poster))
+        }
         titleLabel.text = model.title
         typeLabel.text = model.type
         yearLabel.text = model.year

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E8299C5A2900A47700F036B3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8299C592900A47700F036B3 /* DetailViewController.swift */; };
+		E87D1DA12902BC100028EDA9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA02902BC100028EDA9 /* Color.swift */; };
 		E8DE8F0A28FD4A470037598C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0928FD4A470037598C /* AppDelegate.swift */; };
 		E8DE8F0C28FD4A470037598C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0B28FD4A470037598C /* SceneDelegate.swift */; };
 		E8DE8F0E28FD4A470037598C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0D28FD4A470037598C /* HomeViewController.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		E8299C592900A47700F036B3 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		E87D1DA02902BC100028EDA9 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E8DE8F0628FD4A470037598C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8DE8F0928FD4A470037598C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8DE8F0B28FD4A470037598C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				E8DE8F4228FDA9300037598C /* Enums.swift */,
 				E8DE8F4D28FDEEC80037598C /* Endpoint.swift */,
 				E8DE8F5728FF05C40037598C /* MovieError.swift */,
+				E87D1DA02902BC100028EDA9 /* Color.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E87D1DA12902BC100028EDA9 /* Color.swift in Sources */,
 				E8DE8F5228FDEFC50037598C /* NetworkManager.swift in Sources */,
 				E8DE8F4C28FDED320037598C /* MovieTableViewCell.swift in Sources */,
 				E8DE8F4028FDA9030037598C /* Firebase+Extensions.swift in Sources */,

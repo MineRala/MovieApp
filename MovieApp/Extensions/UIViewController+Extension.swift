@@ -17,14 +17,15 @@ extension UIViewController {
         self.present(alert, animated: true)
         let deadlineTime = DispatchTime.now() + .seconds(delay)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
-        alert.dismiss(animated: true, completion: nil)
+            alert.dismiss(animated: true, completion: nil)
         })
     }
     
     func showLoadingView() {
         containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(containerView)
-        containerView.backgroundColor = #colorLiteral(red: 0.1097382233, green: 0.6288500428, blue: 0.6367314458, alpha: 1).withAlphaComponent(0.7)
+        containerView.backgroundColor = Color.appBase.withAlphaComponent(0.7)
         containerView.alpha = 0
         containerView.snp.makeConstraints { make in
             make.centerY.centerX.equalToSuperview()
@@ -41,15 +42,33 @@ extension UIViewController {
         containerView.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.snp.makeConstraints { (make) in
-        make.centerX.equalToSuperview()
-        make.centerY.equalToSuperview()
-        activityIndicator.startAnimating()
-
+            make.centerX.centerY.equalToSuperview()
         }
+        activityIndicator.startAnimating()
     }
-
+    
     func dismissLoadingView() {
         containerView?.removeFromSuperview()
         containerView = nil
+    }
+    
+    func openView(viewController: UIViewController) {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromTop
+        navigationController?.view.layer.add(transition, forKey: kCATransition)
+        navigationController?.pushViewController(viewController, animated: false)
+    }
+    
+    func closeView() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.fade
+        transition.subtype = CATransitionSubtype.fromBottom
+        navigationController?.view.layer.add(transition, forKey:kCATransition)
+        navigationController?.popViewController(animated: false)
     }
 }
