@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FirebaseAnalytics
+import SnapKit
 
 private enum DetailViewConstant {
     static let cellReuseIdentifier = "GenreCollectionViewCell"
@@ -16,10 +16,18 @@ private enum DetailViewConstant {
     static let cellBackgroundColor = Color.cellBackgrounColor
     static let cellBorderColor = Color.black
     static let backButtonIcon = "arrow.backward"
+    static let cellSpacing = 20.0
+    static let cellSize = CGSize(width: 100, height: 32)
+}
+
+protocol DetailViewInterface: AnyObject {
+    func configureNavigationBar()
+    func setUpUI()
+    func setUI(model: MovieDetailResult)
 }
 
 final class DetailViewController: UIViewController {
-
+    
     private lazy var posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +75,7 @@ final class DetailViewController: UIViewController {
         label.textAlignment = .left
         return label
     }()
-        
+    
     private lazy var plotTextView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,12 +110,11 @@ final class DetailViewController: UIViewController {
         return collectionView
     }()
     
-    
-    private var movieDetailResult: MovieDetailResult
     private var genreArray = [String]()
+    private var viewModel: DetailViewModelInterface
     
     init(movieDetailResult: MovieDetailResult) {
-        self.movieDetailResult = movieDetailResult
+        viewModel = DetailViewModel(movieDetailResult: movieDetailResult)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -117,18 +124,45 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        MovieAnalytics.sendMovieDetailEvent(movie: movieDetailResult)
-        view.backgroundColor = DetailViewConstant.backgroundColor
-        configureNavigationBar()
-        setUpUI()
-        setUI(model: movieDetailResult)
+        viewModel.view = self
+        viewModel.viewDidLoad()
     }
     
-    private func genreSplit(text: String) -> [String]{
-        return text.components(separatedBy: ", ")
+    @objc func close() {
+        closeView()
+    }
+}
+
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        genreArray.count
     }
     
-    private func configureNavigationBar() {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailViewConstant.cellReuseIdentifier,for: indexPath) as? GenreCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.backgroundColor = DetailViewConstant.cellBackgroundColor
+        cell.layer.cornerRadius = 8
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = DetailViewConstant.cellBackgroundColor.cgColor
+        cell.setCell(title: genreArray[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        DetailViewConstant.cellSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        DetailViewConstant.cellSpacing
+    }
+    
+}
+
+extension DetailViewController: DetailViewInterface {
+    func configureNavigationBar() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(close))
         backButton.setBackgroundImage(UIImage(systemName: DetailViewConstant.backButtonIcon), for: .normal, barMetrics: .default)
         backButton.tintColor = DetailViewConstant.titleTextAttributesColor
@@ -138,7 +172,8 @@ final class DetailViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = attributes as [NSAttributedString.Key : Any]
     }
     
-    private func setUpUI() {
+    func setUpUI() {
+        view.backgroundColor = DetailViewConstant.backgroundColor
         view.addSubview(posterImageView)
         posterImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -186,47 +221,18 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    private func setUI(model: MovieDetailResult) {
-        posterImageView.kf.setImage(with: URL(string: model.poster))
+    func setUI(model: MovieDetailResult) {
+        if model.poster == "N/A" {
+            posterImageView.image = UIImage(named: "NoImage")
+        } else {
+            posterImageView.kf.setImage(with: URL(string: model.poster))
+        }
         titleLabel.text = model.title
         actorLabel.text = model.actors
         countryLabel.text = "Country: \(model.country)"
         languageLabel.text = "Language: \(model.language)"
-        genreArray = genreSplit(text: model.genre)
+        genreArray = viewModel.genreSplit(text: model.genre)
         plotTextView.text = model.plot
         
     }
-
-    @objc func close() {
-        closeView()
-    }
-}
-
-
-extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return  genreArray.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailViewConstant.cellReuseIdentifier,for: indexPath) as? GenreCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.backgroundColor = DetailViewConstant.cellBackgroundColor
-        cell.layer.cornerRadius = 8
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = DetailViewConstant.cellBackgroundColor.cgColor
-        cell.setCell(title: genreArray[indexPath.row])
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 32)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
-    }
-
 }

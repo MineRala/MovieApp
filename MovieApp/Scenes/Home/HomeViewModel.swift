@@ -32,35 +32,6 @@ final class HomeViewModel {
 
 //MARK: - HomeViewModelInterface
 extension HomeViewModel: HomeViewModelInterface {
-    func setMovies(text: String) {
-        self.view?.loadIndicatorForApiRequestCompleted()
-        view?.searchBarEnabled(isEnable: false)
-        guard !text.isEmpty else { return }
-            DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
-                NetworkManager.shared.moviesBySearchFetched(movieSearchTitle: text, completion: { [weak self] data in
-                    self?.view?.dissmissIndicatorForApiRequestCompleted()
-                    self?.view?.searchBarEnabled(isEnable: true)
-                    if let data = data, text.count != 0  {
-                        self?.view?.emptyLableIsHidden(isHidden: true)
-                        self?.searchList = data
-                    } else {
-                        self?.view?.emptyLableIsHidden(isHidden: false)
-                        self?.searchList.removeAll()
-                    }
-                    DispatchQueue.main.async {
-                        self?.view?.reloadTableViewAfterIndicator()
-                    }
-                })
-            })
-    }
-        
-    func selectedMovie(imdbID: String) {
-        NetworkManager.shared.movieDetailsFetched(movieIMBID: imdbID) { [weak self] result in
-            guard let result = result else { return }
-            self?.view?.openView(result: result)
-        }
-    }
-    
     var numberOfRowsInSection: Int {
         searchList.count
     }
@@ -73,12 +44,41 @@ extension HomeViewModel: HomeViewModelInterface {
         view?.setUpNavigationBar()
         view?.setUpUI()
     }
-    
-    func removeAllMovies() {
-        searchList.removeAll()
+
+    func setMovies(text: String) {
+        self.view?.loadIndicatorForApiRequestCompleted()
+        view?.searchBarEnabled(isEnable: false)
+        guard !text.isEmpty else { return }
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
+            NetworkManager.shared.moviesBySearchFetched(movieSearchTitle: text, completion: { [weak self] data in
+                self?.view?.dissmissIndicatorForApiRequestCompleted()
+                self?.view?.searchBarEnabled(isEnable: true)
+                if let data = data, text.count != 0  {
+                    self?.view?.emptyLableIsHidden(isHidden: true)
+                    self?.searchList = data
+                } else {
+                    self?.view?.emptyLableIsHidden(isHidden: false)
+                    self?.searchList.removeAll()
+                }
+                DispatchQueue.main.async {
+                    self?.view?.reloadTableViewAfterIndicator()
+                }
+            })
+        })
     }
     
     func getMovie(index: Int) -> Search {
         searchList[index]
+    }
+    
+    func selectedMovie(imdbID: String) {
+        NetworkManager.shared.movieDetailsFetched(movieIMBID: imdbID) { [weak self] result in
+            guard let result = result else { return }
+            self?.view?.openView(result: result)
+        }
+    }
+        
+    func removeAllMovies() {
+        searchList.removeAll()
     }
 }
