@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 private enum DetailViewConstant {
     static let cellReuseIdentifier = "GenreCollectionViewCell"
@@ -116,6 +117,7 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MovieAnalytics.sendMovieDetailEvent(movie: movieDetailResult)
         view.backgroundColor = DetailViewConstant.backgroundColor
         configureNavigationBar()
         setUpUI()
@@ -194,7 +196,7 @@ final class DetailViewController: UIViewController {
         plotTextView.text = model.plot
         
     }
-    
+
     @objc func close() {
         closeView()
     }
