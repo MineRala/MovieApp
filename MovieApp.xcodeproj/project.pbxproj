@@ -11,6 +11,8 @@
 		E87D1DA12902BC100028EDA9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA02902BC100028EDA9 /* Color.swift */; };
 		E87D1DA3290405550028EDA9 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA2290405550028EDA9 /* GenreCollectionViewCell.swift */; };
 		E87D1DA529043A760028EDA9 /* MovieAnalystics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA429043A760028EDA9 /* MovieAnalystics.swift */; };
+		E87D1DA82904406E0028EDA9 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = E87D1DA72904406E0028EDA9 /* FirebaseMessaging */; };
+		E87D1DAA2904481F0028EDA9 /* MovieNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA92904481F0028EDA9 /* MovieNotificationManager.swift */; };
 		E8DE8F0A28FD4A470037598C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0928FD4A470037598C /* AppDelegate.swift */; };
 		E8DE8F0C28FD4A470037598C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0B28FD4A470037598C /* SceneDelegate.swift */; };
 		E8DE8F0E28FD4A470037598C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0D28FD4A470037598C /* HomeViewController.swift */; };
@@ -41,6 +43,7 @@
 		E87D1DA02902BC100028EDA9 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E87D1DA2290405550028EDA9 /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		E87D1DA429043A760028EDA9 /* MovieAnalystics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAnalystics.swift; sourceTree = "<group>"; };
+		E87D1DA92904481F0028EDA9 /* MovieNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNotificationManager.swift; sourceTree = "<group>"; };
 		E8DE8F0628FD4A470037598C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8DE8F0928FD4A470037598C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8DE8F0B28FD4A470037598C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E87D1DA82904406E0028EDA9 /* FirebaseMessaging in Frameworks */,
 				E8DE8F2928FD71CC0037598C /* Kingfisher in Frameworks */,
 				E8DE8F2328FD717C0037598C /* SnapKit in Frameworks */,
 				E8DE8F3328FD8FB60037598C /* FirebaseAnalytics in Frameworks */,
@@ -154,6 +158,7 @@
 			children = (
 				E8DE8F2D28FD7F150037598C /* Connectivity.swift */,
 				E87D1DA429043A760028EDA9 /* MovieAnalystics.swift */,
+				E87D1DA92904481F0028EDA9 /* MovieNotificationManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				E8DE8F2828FD71CC0037598C /* Kingfisher */,
 				E8DE8F3228FD8FB60037598C /* FirebaseAnalytics */,
 				E8DE8F3428FD8FB60037598C /* FirebaseRemoteConfig */,
+				E87D1DA72904406E0028EDA9 /* FirebaseMessaging */,
 			);
 			productName = MovieApp;
 			productReference = E8DE8F0628FD4A470037598C /* MovieApp.app */;
@@ -269,6 +275,7 @@
 				E8DE8F2428FD718C0037598C /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E8DE8F2728FD71CC0037598C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E8DE8F3128FD8FB60037598C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = E8DE8F0728FD4A470037598C /* Products */;
 			projectDirPath = "";
@@ -300,6 +307,7 @@
 				E87D1DA12902BC100028EDA9 /* Color.swift in Sources */,
 				E87D1DA529043A760028EDA9 /* MovieAnalystics.swift in Sources */,
 				E8DE8F5228FDEFC50037598C /* NetworkManager.swift in Sources */,
+				E87D1DAA2904481F0028EDA9 /* MovieNotificationManager.swift in Sources */,
 				E8DE8F4C28FDED320037598C /* MovieTableViewCell.swift in Sources */,
 				E8DE8F4028FDA9030037598C /* Firebase+Extensions.swift in Sources */,
 				E8DE8F0E28FD4A470037598C /* HomeViewController.swift in Sources */,
@@ -482,7 +490,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PJ9SW5348L;
+				DEVELOPMENT_TEAM = LFZX9FGKB4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -527,6 +535,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		E8DE8F2128FD717C0037598C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -562,6 +578,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E87D1DA72904406E0028EDA9 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		E8DE8F2228FD717C0037598C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E8DE8F2128FD717C0037598C /* XCRemoteSwiftPackageReference "SnapKit" */;
