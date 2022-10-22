@@ -10,8 +10,8 @@ import Kingfisher
 
 private enum MovieTableViewCellConstnt {
     static let viewColor = Color.cellBackgrounColor
+    static let borderColor = Color.black
 }
-
 
 final class MovieTableViewCell: UITableViewCell {
     
@@ -20,7 +20,7 @@ final class MovieTableViewCell: UITableViewCell {
         view.backgroundColor = MovieTableViewCellConstnt.viewColor
         view.layer.borderWidth = 1
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
+        view.layer.borderColor = MovieTableViewCellConstnt.borderColor.withAlphaComponent(0.3).cgColor
         view.layer.cornerRadius = 12
         return view
     }()

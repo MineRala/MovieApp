@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - MovieDetailResults
 struct MovieDetailResult: Codable {
-    let title, year, rated, released, runtime, genre, director, writer, actors, plot, awards, poster, imdbRating: String
+    let title, year, rated, released, runtime, genre, director, writer, actors, plot, country, language,awards, poster, imdbRating: String
     
     enum CodingKeys: String, CodingKey {
         case title = "Title"
@@ -22,6 +22,8 @@ struct MovieDetailResult: Codable {
         case writer = "Writer"
         case actors = "Actors"
         case plot = "Plot"
+        case country = "Country"
+        case language = "Language"
         case awards = "Awards"
         case poster = "Poster"
         case imdbRating

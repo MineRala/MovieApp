@@ -29,6 +29,10 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: HomeViewConstant.cellReuseIdentifier)
         return tableView
     }()
     
@@ -47,14 +51,10 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBar()
         setUpUI()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        searchBar.searchBar.text = nil
-//        searchBar.isActive = false
-//    }
-
     private func configureNavigationBar() {
         navigationItem.hidesBackButton = true
         navigationItem.searchController = searchVC
@@ -68,17 +68,12 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
 
     private func setUpUI() {
         self.view.backgroundColor = HomeViewConstant.backgroundColor
-        configureNavigationBar()
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.bottom.top.equalToSuperview().offset(20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: HomeViewConstant.cellReuseIdentifier)
         
         self.view.addSubview(emptyLabel)
         emptyLabel.snp.makeConstraints { make in

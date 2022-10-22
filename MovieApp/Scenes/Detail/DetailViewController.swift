@@ -8,28 +8,17 @@
 import UIKit
 
 private enum DetailViewConstant {
+    static let cellReuseIdentifier = "GenreCollectionViewCell"
     static let navigationBarTitle = "Movie Detail"
     static let titleTextAttributesColor = Color.appBase
     static let backgroundColor = Color.white
+    static let cellBackgroundColor = Color.cellBackgrounColor
+    static let cellBorderColor = Color.black
     static let backButtonIcon = "arrow.backward"
-    
 }
 
 final class DetailViewController: UIViewController {
-    
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+
     private lazy var posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +37,6 @@ final class DetailViewController: UIViewController {
         label.textAlignment = .left
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
-        label.text = "The ABC Murders The ABC Murders The ABC Murders The ABC Murders"
         return label
     }()
     
@@ -58,26 +46,36 @@ final class DetailViewController: UIViewController {
         label.font = FuturaFont.condesedMedium.of(size: 16)
         label.textColor = .black
         label.textAlignment = .left
-        label.text = "Lance Kerwin, Samaria Graham, Mara Hobel"
         return label
     }()
     
     private lazy var languageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = FuturaFont.medium.of(size: 12)
+        label.font = FuturaFont.medium.of(size: 14)
         label.textColor = .black
         label.textAlignment = .left
         return label
     }()
     
-    private lazy var plotLabel: UILabel = {
+    private lazy var countryLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = FuturaFont.medium.of(size: 12)
+        label.font = FuturaFont.medium.of(size: 14)
         label.textColor = .black
         label.textAlignment = .left
         return label
+    }()
+        
+    private lazy var plotTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = FuturaFont.medium.of(size: 16)
+        textView.textColor = .black
+        textView.isScrollEnabled = true
+        textView.isEditable = false
+        textView.textAlignment = .left
+        return textView
     }()
     
     private lazy var stackView: UIStackView = {
@@ -86,17 +84,29 @@ final class DetailViewController: UIViewController {
         stackView.spacing = 20
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.backgroundColor = .purple
         return stackView
+    }()
+    
+    private lazy var collectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        flowLayout.scrollDirection = .horizontal
+        collectionView.backgroundColor = .white
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: DetailViewConstant.cellReuseIdentifier)
+        return collectionView
     }()
     
     
     private var movieDetailResult: MovieDetailResult
+    private var genreArray = [String]()
     
     init(movieDetailResult: MovieDetailResult) {
         self.movieDetailResult = movieDetailResult
-        print(movieDetailResult)
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -107,6 +117,16 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = DetailViewConstant.backgroundColor
+        configureNavigationBar()
+        setUpUI()
+        setUI(model: movieDetailResult)
+    }
+    
+    private func genreSplit(text: String) -> [String]{
+        return text.components(separatedBy: ", ")
+    }
+    
+    private func configureNavigationBar() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(close))
         backButton.setBackgroundImage(UIImage(systemName: DetailViewConstant.backButtonIcon), for: .normal, barMetrics: .default)
         backButton.tintColor = DetailViewConstant.titleTextAttributesColor
@@ -114,58 +134,65 @@ final class DetailViewController: UIViewController {
         navigationItem.title = DetailViewConstant.navigationBarTitle
         let attributes = [NSAttributedString.Key.foregroundColor: DetailViewConstant.titleTextAttributesColor , NSAttributedString.Key.font : UIFont(name: FuturaFont.bold.rawValue, size: 20)!]
         self.navigationController?.navigationBar.titleTextAttributes = attributes as [NSAttributedString.Key : Any]
-       
-        setUpUI()
     }
     
     private func setUpUI() {
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        scrollView.addSubview(contentView)
-
-        let heightConstraint = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
-        heightConstraint.priority = UILayoutPriority(250)
-        NSLayoutConstraint.activate([
-          contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-          contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-          contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-          contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-          contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-          heightConstraint,
-        ])
-        
-        contentView.addSubview(posterImageView)
+        view.addSubview(posterImageView)
         posterImageView.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.left.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-10)
             make.height.equalToSuperview().multipliedBy(0.3)
         }
         
-        contentView.addSubview(titleLabel)
-        titleLabel.backgroundColor = .brown
+        view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(posterImageView.snp.bottom).offset(20)
             make.right.left.equalTo(posterImageView)
-            make.height.equalToSuperview().multipliedBy(0.04)
+            make.height.equalToSuperview().multipliedBy(0.05)
         }
         
-        contentView.addSubview(actorLabel)
-        actorLabel.backgroundColor = .blue
+        view.addSubview(actorLabel)
         actorLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
             make.right.left.equalTo(titleLabel)
             make.height.equalToSuperview().multipliedBy(0.04)
         }
         
-        contentView.addSubview(stackView)
+        view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.top.equalTo(actorLabel.snp.bottom).offset(10)
             make.left.right.equalTo(titleLabel)
-            make.height.equalToSuperview().multipliedBy(0.05)
+            make.height.equalTo(32)
         }
+        
+        stackView.addArrangedSubview(countryLabel)
+        stackView.addArrangedSubview(languageLabel)
+        
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(10)
+            make.left.right.equalTo(stackView)
+            make.height.equalTo(40)
+        }
+        
+        view.addSubview(plotTextView)
+        plotTextView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
+            make.left.right.equalTo(collectionView)
+            make.bottom.equalTo(view.snp.bottom).offset(-20)
+        }
+    }
+    
+    private func setUI(model: MovieDetailResult) {
+        posterImageView.kf.setImage(with: URL(string: model.poster))
+        titleLabel.text = model.title
+        actorLabel.text = model.actors
+        countryLabel.text = "Country: \(model.country)"
+        languageLabel.text = "Language: \(model.language)"
+        genreArray = genreSplit(text: model.genre)
+        plotTextView.text = model.plot
+        
     }
     
     @objc func close() {
@@ -173,3 +200,31 @@ final class DetailViewController: UIViewController {
     }
 }
 
+
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return  genreArray.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailViewConstant.cellReuseIdentifier,for: indexPath) as? GenreCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.backgroundColor = DetailViewConstant.cellBackgroundColor
+        cell.layer.cornerRadius = 8
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = DetailViewConstant.cellBackgroundColor.cgColor
+        cell.setCell(title: genreArray[indexPath.row])
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 32)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+
+}
