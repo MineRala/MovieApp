@@ -18,7 +18,18 @@ private enum HomeViewConstant {
     static let fontSize = 20
 }
 
-class HomeViewController: UIViewController, UISearchControllerDelegate {
+protocol HomeViewInterface: AnyObject {
+    func setUpNavigationBar()
+    func setUpUI()
+    func openView(result: MovieDetailResult)
+    func reloadTableViewAfterIndicator()
+    func dissmissIndicatorForApiRequestCompleted()
+    func loadIndicatorForApiRequestCompleted()
+    func searchBarEnabled(isEnable: Bool)
+    func emptyLableIsHidden(isHidden: Bool)
+}
+
+final class HomeViewController: UIViewController, UISearchControllerDelegate {
     
     private lazy var searchVC: UISearchController = {
         let searchVC = UISearchController(searchResultsController: nil)
@@ -47,15 +58,60 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
         return label
     }()
     
-    var searchList = [Search]()
+    private lazy var viewModel: HomeViewModelInterface = HomeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationBar()
-        setUpUI()
+        viewModel.view = self
+        viewModel.viewDidLoad()
+    }
+}
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRowsInSection
     }
     
-    private func configureNavigationBar() {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeViewConstant.cellReuseIdentifier,for: indexPath) as? MovieTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.setCell(model: viewModel.getMovie(index: indexPath.row))
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.selectedMovie(imdbID: viewModel.getMovie(index: indexPath.row).imdbID)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        viewModel.heightForRowAt
+    }
+}
+
+extension HomeViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else {
+            return
+        }
+        viewModel.setMovies(text: text)
+    }
+        
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+       reloadTableViewAfterIndicator()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        emptyLabel.isHidden = true
+        viewModel.removeAllMovies()
+        tableView.reloadData()
+    }
+}
+
+extension HomeViewController: HomeViewInterface {
+    func setUpNavigationBar() {
         navigationItem.hidesBackButton = true
         navigationItem.searchController = searchVC
         searchVC.searchBar.delegate = self
@@ -66,7 +122,7 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
-    private func setUpUI() {
+    func setUpUI() {
         self.view.backgroundColor = HomeViewConstant.backgroundColor
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -80,89 +136,35 @@ class HomeViewController: UIViewController, UISearchControllerDelegate {
             make.centerX.centerY.equalToSuperview()
         }
     }
-}
-
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchList.count
+    
+    func openView(result: MovieDetailResult) {
+        self.openView(viewController: DetailViewController(movieDetailResult: result))
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeViewConstant.cellReuseIdentifier,for: indexPath) as? MovieTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.setCell(model: searchList[indexPath.row])
-        cell.selectionStyle = .none
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        selectedMovie(imdbID: searchList[indexPath.row].imdbID)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-}
-
-extension HomeViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.loadIndicatorForApiRequestCompleted()
-        searchVC.searchBar.isUserInteractionEnabled = false
-        guard let text = searchBar.text, !text.isEmpty else { return }
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
-            NetworkManager.shared.moviesBySearchFetched(movieSearchTitle: text, completion: { [weak self] data in
-                self?.dissmissIndicatorForApiRequestCompleted()
-                self!.searchVC.searchBar.isUserInteractionEnabled = true
-                if let data = data, text.count != 0  {
-                    self?.emptyLabel.isHidden = true
-                    self?.searchList = data
-                } else {
-                    self?.emptyLabel.isHidden = false
-                    self?.searchList.removeAll()
-                }
-                DispatchQueue.main.async {
-                    self?.reloadTableViewAfterIndicator()
-                }
-            })
-        })
-    }
-        
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-       reloadTableViewAfterIndicator()
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        emptyLabel.isHidden = true
-        searchList.removeAll()
-        tableView.reloadData()
-    }
-}
-
-extension HomeViewController {
-    func loadIndicatorForApiRequestCompleted() {
-        DispatchQueue.main.async {
-            self.showLoadingView()
-        }
-    }
-
-    func dissmissIndicatorForApiRequestCompleted() {
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(30), execute: { [weak self] in
-            self!.dismissLoadingView()
-        })
-    }
-
     func reloadTableViewAfterIndicator() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
     
-    func selectedMovie(imdbID: String) {
-        NetworkManager.shared.movieDetailsFetched(movieIMBID: imdbID) { result in
-            guard let result = result else { return }
-            self.openView(viewController: DetailViewController(movieDetailResult: result))
+    func dissmissIndicatorForApiRequestCompleted() {
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(30), execute: { [weak self] in
+            self!.dismissLoadingView()
+        })
+    }
+    
+    func loadIndicatorForApiRequestCompleted() {
+        DispatchQueue.main.async {
+            self.showLoadingView()
         }
     }
+    
+    func searchBarEnabled(isEnable: Bool) {
+        searchVC.searchBar.isUserInteractionEnabled = isEnable
+    }
+
+    func emptyLableIsHidden(isHidden: Bool) {
+        emptyLabel.isHidden = isHidden
+    }
+    
 }
