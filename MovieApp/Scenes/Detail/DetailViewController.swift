@@ -127,14 +127,17 @@ final class DetailViewController: UIViewController {
         viewModel.view = self
         viewModel.viewDidLoad()
     }
-    
+}
+
+//MARK: - Actions
+extension DetailViewController {
     @objc func close() {
         closeView()
     }
 }
 
-extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    
+//MARK: - CollectionView DataSource
+extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         genreArray.count
     }
@@ -150,7 +153,10 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.setCell(title: genreArray[indexPath.row])
         return cell
     }
-    
+}
+
+//MARK: - CollectionView Delegate
+extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         DetailViewConstant.cellSize
     }
@@ -158,9 +164,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         DetailViewConstant.cellSpacing
     }
-    
 }
 
+//MARK: - DetailViewInterface
 extension DetailViewController: DetailViewInterface {
     func configureNavigationBar() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(close))

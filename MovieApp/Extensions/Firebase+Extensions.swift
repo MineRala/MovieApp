@@ -7,7 +7,7 @@
 
 import FirebaseRemoteConfig
 
-// MARK: - Remote Config
+//MARK: - Remote Config
 extension RemoteConfig {
     func configValue(forKey remoteConfigKey: RemoteConfigKey) -> RemoteConfigValue {
         return configValue(forKey: remoteConfigKey.rawValue)

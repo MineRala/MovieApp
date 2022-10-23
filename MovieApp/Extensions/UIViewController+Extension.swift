@@ -11,6 +11,7 @@ import SnapKit
 
 fileprivate var containerView: UIView!
 
+//MARK: - Toast
 extension UIViewController {
     func showToast(title:String ,text:String, delay:Int) -> Void {
         let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
@@ -20,7 +21,10 @@ extension UIViewController {
             alert.dismiss(animated: true, completion: nil)
         })
     }
-    
+}
+
+//MARK: - Loding View
+extension UIViewController {
     func showLoadingView() {
         containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +55,10 @@ extension UIViewController {
         containerView?.removeFromSuperview()
         containerView = nil
     }
-    
+}
+
+//MARK: - View Animation
+extension UIViewController {
     func openView(viewController: UIViewController) {
         let transition = CATransition()
         transition.duration = 0.5

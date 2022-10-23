@@ -32,14 +32,20 @@ final class GenreCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         titleLabel.text = nil
     }
-    
+}
+
+// MARK: - Configure Cell
+extension GenreCollectionViewCell {
     private func configureCell() {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
-    
+}
+
+// MARK: - Set Cell
+extension GenreCollectionViewCell {
     func setCell(title: String) {
         titleLabel.text = title
     }

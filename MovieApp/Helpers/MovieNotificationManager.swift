@@ -14,15 +14,10 @@ import FirebaseMessaging
 // Notification için kod implemente edildi.
 // Eğer firebase client'ına apns key girilirse push notification atacaktır.
 
-public protocol MovieNotificationManagerDelegate: AnyObject {
-    func getDeviceToken(token: String)
-}
-
 final class MovieNotificationManager: NSObject, MessagingDelegate {
     static let shared = MovieNotificationManager()
     private(set) var deviceToken: Data?
     private(set) var authorizationOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-    public weak var delegate: MovieNotificationManagerDelegate?
     let notificationCenter = UNUserNotificationCenter.current()
     private(set) var authorizationStatus: UNAuthorizationStatus = .notDetermined
     

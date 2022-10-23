@@ -37,10 +37,12 @@ final class SplashViewController: UIViewController {
     }
 }
 
+//MARK: - SplashViewController
 extension SplashViewController: SplashViewInterface {
     func setViewColor() {
         self.view.backgroundColor = Color.white
     }
+    
     func setUpLabel() {
         self.label.isHidden = false
         self.view.addSubview(label)

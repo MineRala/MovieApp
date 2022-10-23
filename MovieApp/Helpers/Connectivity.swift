@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class Connectivity {
+final class Connectivity {
     static var isConnectedToInternet:Bool {
             return NetworkReachabilityManager()!.isReachable
         }

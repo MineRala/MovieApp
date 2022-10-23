@@ -13,7 +13,7 @@ private enum HomeViewConstant {
     static let navigationBarTitle = "Movies"
     static let titleTextAttributesColor = Color.appBase
     static let backgroundColor = Color.white
-    static let emptyLabelText = "No Found Movie"
+    static let emptyLabelText = "No Movies Found!"
     static let searchText = "Search Movie"
     static let fontSize = 20
 }
@@ -67,7 +67,8 @@ final class HomeViewController: UIViewController, UISearchControllerDelegate {
     }
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+//MARK: - TableView DataSource
+extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRowsInSection
     }
@@ -80,7 +81,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
-    
+}
+
+//MARK: - TableView Delegate
+extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         viewModel.selectedMovie(imdbID: viewModel.getMovie(index: indexPath.row).imdbID)
@@ -91,6 +95,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK: - SearchBar Delegate
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else {
@@ -110,6 +115,7 @@ extension HomeViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - HomeViewInterface
 extension HomeViewController: HomeViewInterface {
     func setUpNavigationBar() {
         navigationItem.hidesBackButton = true

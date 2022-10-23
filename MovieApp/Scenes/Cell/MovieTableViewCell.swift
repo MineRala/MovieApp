@@ -91,6 +91,7 @@ final class MovieTableViewCell: UITableViewCell {
     }
 }
 
+//MARK: - Configure Cell
 extension MovieTableViewCell {
     private func configureCell() {
         contentView.addSubview(containerView)

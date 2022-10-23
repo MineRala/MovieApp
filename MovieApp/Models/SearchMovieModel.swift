@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - MovieResult
+//MARK: - MovieResult
 struct MovieResult: Decodable {
     let search: [Search]
     
@@ -16,7 +16,7 @@ struct MovieResult: Decodable {
     }
 }
 
-// MARK: - Search
+//MARK: - Search
 struct Search: Decodable {
     let title, year, imdbID, type, poster: String
 

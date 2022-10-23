@@ -53,6 +53,7 @@ final class SplashViewModel {
     }
 }
 
+//MARK: - SplashViewModelInterface
 extension SplashViewModel: SplashViewModelInterface {
     var remoteConfig: RemoteConfig? {
         get {
