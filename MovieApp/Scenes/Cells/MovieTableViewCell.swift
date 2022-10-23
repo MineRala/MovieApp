@@ -39,7 +39,7 @@ final class MovieTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.bold.of(size: 16)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
@@ -50,7 +50,7 @@ final class MovieTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.condesedMedium.of(size: 16)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         return label
     }()
@@ -59,7 +59,7 @@ final class MovieTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.medium.of(size: 12)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         return label
     }()
@@ -67,9 +67,8 @@ final class MovieTableViewCell: UITableViewCell {
     private lazy var typeView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .gray.withAlphaComponent(0.5)
+        view.backgroundColor = MovieTableViewCellConstnt.viewColor.withAlphaComponent(0.5)
         view.layer.cornerRadius = 12
-        
         return view
     }()
     

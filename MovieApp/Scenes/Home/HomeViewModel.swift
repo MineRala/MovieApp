@@ -27,7 +27,8 @@ private extension HomeViewModel {
 
 final class HomeViewModel {
     weak var view: HomeViewInterface?
-    var searchList = [Search]()
+    private var searchList = [Search]()
+    private var service = NetworkManager.shared
 }
 
 //MARK: - HomeViewModelInterface
@@ -50,31 +51,35 @@ extension HomeViewModel: HomeViewModelInterface {
         view?.searchBarEnabled(isEnable: false)
         guard !text.isEmpty else { return }
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
-            NetworkManager.shared.moviesBySearchFetched(movieSearchTitle: text, completion: { [weak self] data in
+            self?.service.makeRequest(endpoint: .movieSearchTitle(movieSearchTitle: text), type: MovieResult.self, completed: { [weak self] result in
                 self?.view?.dissmissIndicatorForApiRequestCompleted()
                 self?.view?.searchBarEnabled(isEnable: true)
-                if let data = data, text.count != 0  {
-                    self?.view?.emptyLableIsHidden(isHidden: true)
-                    self?.searchList = data
-                } else {
-                    self?.view?.emptyLableIsHidden(isHidden: false)
+                switch result {
+                case .success(let movieResults):
+                    self?.view?.emptyLabelIsHidden(isHidden: true)
+                    self?.searchList = movieResults.search
+                case .failure(let error):
+                    print(error)
+                    self?.view?.emptyLabelIsHidden(isHidden: false)
                     self?.searchList.removeAll()
                 }
-                DispatchQueue.main.async {
-                    self?.view?.reloadTableViewAfterIndicator()
-                }
+                self?.view?.reloadTableViewAfterIndicator()
             })
         })
     }
-    
+
     func getMovie(index: Int) -> Search {
         searchList[index]
     }
     
     func selectedMovie(imdbID: String) {
-        NetworkManager.shared.movieDetailsFetched(movieIMBID: imdbID) { [weak self] result in
-            guard let result = result else { return }
-            self?.view?.openView(result: result)
+        service.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { result in
+            switch result {
+            case .success(let movieDetailResult):
+                self.view?.openView(result: movieDetailResult)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
         

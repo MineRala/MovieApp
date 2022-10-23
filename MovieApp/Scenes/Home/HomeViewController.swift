@@ -15,7 +15,7 @@ private enum HomeViewConstant {
     static let backgroundColor = Color.white
     static let emptyLabelText = "No Movies Found!"
     static let searchText = "Search Movie"
-    static let fontSize = 20
+    static let fontSize = 20.0
 }
 
 protocol HomeViewInterface: AnyObject {
@@ -26,7 +26,7 @@ protocol HomeViewInterface: AnyObject {
     func dissmissIndicatorForApiRequestCompleted()
     func loadIndicatorForApiRequestCompleted()
     func searchBarEnabled(isEnable: Bool)
-    func emptyLableIsHidden(isHidden: Bool)
+    func emptyLabelIsHidden(isHidden: Bool)
 }
 
 final class HomeViewController: UIViewController, UISearchControllerDelegate {
@@ -98,14 +98,8 @@ extension HomeViewController: UITableViewDelegate {
 //MARK: - SearchBar Delegate
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else {
-            return
-        }
+        guard let text = searchBar.text else { return }
         viewModel.setMovies(text: text)
-    }
-        
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-       reloadTableViewAfterIndicator()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -123,7 +117,7 @@ extension HomeViewController: HomeViewInterface {
         searchVC.searchBar.delegate = self
         searchVC.searchBar.placeholder = HomeViewConstant.searchText
         navigationItem.title = HomeViewConstant.navigationBarTitle
-        let attributes = [NSAttributedString.Key.foregroundColor:  HomeViewConstant.titleTextAttributesColor, NSAttributedString.Key.font : UIFont(name: FuturaFont.bold.rawValue, size: CGFloat(HomeViewConstant.fontSize))!]
+        let attributes = [NSAttributedString.Key.foregroundColor:  HomeViewConstant.titleTextAttributesColor, NSAttributedString.Key.font : UIFont(name: FuturaFont.bold.rawValue, size: HomeViewConstant.fontSize)!]
         self.navigationController?.navigationBar.titleTextAttributes = attributes as [NSAttributedString.Key : Any]
         navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -144,7 +138,7 @@ extension HomeViewController: HomeViewInterface {
     }
     
     func openView(result: MovieDetailResult) {
-        self.openView(viewController: DetailViewController(movieDetailResult: result))
+        openView(viewController: DetailViewController(movieDetailResult: result))
     }
     
     func reloadTableViewAfterIndicator() {
@@ -155,7 +149,7 @@ extension HomeViewController: HomeViewInterface {
     
     func dissmissIndicatorForApiRequestCompleted() {
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(30), execute: { [weak self] in
-            self!.dismissLoadingView()
+            self?.dismissLoadingView()
         })
     }
     
@@ -169,8 +163,7 @@ extension HomeViewController: HomeViewInterface {
         searchVC.searchBar.isUserInteractionEnabled = isEnable
     }
 
-    func emptyLableIsHidden(isHidden: Bool) {
+    func emptyLabelIsHidden(isHidden: Bool) {
         emptyLabel.isHidden = isHidden
     }
-    
 }

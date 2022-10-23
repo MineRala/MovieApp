@@ -9,30 +9,24 @@ import UIKit
 import Alamofire
 
 protocol NetworkManagerProtocol {
-    func moviesBySearchFetched(movieSearchTitle: String, completion: @escaping ([Search]?) -> Void)
-    func movieDetailsFetched(movieIMBID: String, completion: @escaping (MovieDetailResult?) -> Void)
+    func makeRequest<T: Decodable>(endpoint: Endpoint, type: T.Type, completed: @escaping (Result<T, MovieError>) -> Void)
 }
 
-final class NetworkManager: NetworkManagerProtocol {
+protocol NetworkManagerDelegate: AnyObject {
+    func moviesBySearchFetched(movieSearchTitle: String)
+    func movieDetailsFetched(movieIMBID: String)
+}
+
+final class NetworkManager {
     static let shared = NetworkManager()
     
-    func moviesBySearchFetched(movieSearchTitle: String, completion: @escaping ([Search]?) -> Void) {
-        AF.request(Endpoint.movieSearchTitle(movieSearchTitle: movieSearchTitle).url).responseDecodable(of: MovieResult.self) { data in
+    func makeRequest<T: Decodable>(endpoint: Endpoint, type: T.Type, completed: @escaping (Result<T, MovieError>) -> Void) {
+        AF.request(endpoint.url).responseDecodable(of: T.self) { data in
             guard let data = data.value else {
-                completion(nil)
+                completed(.failure(.invalidData))
                 return
             }
-            completion(data.search)
-        }
-    }
-    
-    func movieDetailsFetched(movieIMBID: String, completion: @escaping (MovieDetailResult?) -> Void) {
-        AF.request(Endpoint.detailMovie(movieIMBID: movieIMBID).url).responseDecodable(of: MovieDetailResult.self) { data in
-            guard let data = data.value else {
-                completion(nil)
-                return
-            }
-            completion(data)
+            completed(.success(data))
         }
     }
 }

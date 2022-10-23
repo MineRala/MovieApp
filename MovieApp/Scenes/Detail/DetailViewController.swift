@@ -18,6 +18,9 @@ private enum DetailViewConstant {
     static let backButtonIcon = "arrow.backward"
     static let cellSpacing = 20.0
     static let cellSize = CGSize(width: 100, height: 32)
+    static let cornerRadius = 8.0
+    static let borderWidth = 1.0
+    static let fontSize = 20.0
 }
 
 protocol DetailViewInterface: AnyObject {
@@ -34,7 +37,6 @@ final class DetailViewController: UIViewController {
         imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .red
         return imageView
     }()
     
@@ -42,7 +44,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.bold.of(size: 16)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
@@ -53,7 +55,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.condesedMedium.of(size: 16)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         return label
     }()
@@ -62,7 +64,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.medium.of(size: 14)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         return label
     }()
@@ -71,7 +73,7 @@ final class DetailViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = FuturaFont.medium.of(size: 14)
-        label.textColor = .black
+        label.textColor = Color.black
         label.textAlignment = .left
         return label
     }()
@@ -80,7 +82,7 @@ final class DetailViewController: UIViewController {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = FuturaFont.medium.of(size: 16)
-        textView.textColor = .black
+        textView.textColor = Color.black
         textView.isScrollEnabled = true
         textView.isEditable = false
         textView.textAlignment = .left
@@ -100,11 +102,10 @@ final class DetailViewController: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         flowLayout.scrollDirection = .horizontal
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = Color.white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: DetailViewConstant.cellReuseIdentifier)
         return collectionView
@@ -147,15 +148,15 @@ extension DetailViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         cell.backgroundColor = DetailViewConstant.cellBackgroundColor
-        cell.layer.cornerRadius = 8
-        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = DetailViewConstant.cornerRadius
+        cell.layer.borderWidth = DetailViewConstant.borderWidth
         cell.layer.borderColor = DetailViewConstant.cellBackgroundColor.cgColor
         cell.setCell(title: genreArray[indexPath.row])
         return cell
     }
 }
 
-//MARK: - CollectionView Delegate
+//MARK: - CollectionView Delegate Flow Layout
 extension DetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         DetailViewConstant.cellSize
@@ -174,7 +175,7 @@ extension DetailViewController: DetailViewInterface {
         backButton.tintColor = DetailViewConstant.titleTextAttributesColor
         navigationItem.setLeftBarButton(backButton, animated: false)
         navigationItem.title = DetailViewConstant.navigationBarTitle
-        let attributes = [NSAttributedString.Key.foregroundColor: DetailViewConstant.titleTextAttributesColor , NSAttributedString.Key.font : UIFont(name: FuturaFont.bold.rawValue, size: 20)!]
+        let attributes = [NSAttributedString.Key.foregroundColor: DetailViewConstant.titleTextAttributesColor , NSAttributedString.Key.font : UIFont(name: FuturaFont.bold.rawValue, size: DetailViewConstant.fontSize)!]
         self.navigationController?.navigationBar.titleTextAttributes = attributes as [NSAttributedString.Key : Any]
     }
     

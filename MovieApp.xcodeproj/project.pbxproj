@@ -107,8 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				E8DE8F3E28FD95CB0037598C /* Base */,
-				E8DE8F3D28FD95BB0037598C /* Extensions */,
 				E8DE8F4128FDA92A0037598C /* Utils */,
+				E8DE8F3D28FD95BB0037598C /* Extensions */,
 				E8DE8F3C28FD95B50037598C /* Helpers */,
 				E8DE8F4F28FDEF9D0037598C /* Models */,
 				E8DE8F5028FDEFB70037598C /* Managers */,
@@ -124,7 +124,7 @@
 		E8DE8F3628FD94EB0037598C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				E8DE8F4A28FDED130037598C /* Cell */,
+				E8DE8F4A28FDED130037598C /* Cells */,
 				E8DE8F3728FD94F20037598C /* Splash */,
 				E8DE8F3828FD94F80037598C /* Home */,
 				E8DE8F3928FD94FD0037598C /* Detail */,
@@ -198,13 +198,13 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		E8DE8F4A28FDED130037598C /* Cell */ = {
+		E8DE8F4A28FDED130037598C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				E8DE8F4B28FDED320037598C /* MovieTableViewCell.swift */,
 				E87D1DA2290405550028EDA9 /* GenreCollectionViewCell.swift */,
 			);
-			path = Cell;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		E8DE8F4F28FDEF9D0037598C /* Models */ = {
