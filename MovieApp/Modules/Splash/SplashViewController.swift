@@ -28,11 +28,10 @@ final class SplashViewController: UIViewController {
         return label
     }()
     
-    private lazy var viewModel: SplashViewModelInterface = SplashViewModel()
+    private lazy var viewModel: SplashViewModelInterface = SplashViewModel(view: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
         viewModel.viewDidLoad()
     }
 }

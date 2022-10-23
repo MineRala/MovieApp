@@ -9,7 +9,6 @@ import Foundation
 import FirebaseAnalytics
 
 protocol DetailViewModelInterface {
-    var view: DetailViewInterface? { get set }
     var getMovieResult: MovieDetailResult { get }
     
     func viewDidLoad()
@@ -17,10 +16,11 @@ protocol DetailViewModelInterface {
 }
 
 final class DetailViewModel {
-    weak var view: DetailViewInterface?
+    private weak var view: DetailViewInterface?
     private var movieDetailResult: MovieDetailResult
   
-    init(movieDetailResult: MovieDetailResult) {
+    init(view: DetailViewInterface, movieDetailResult: MovieDetailResult) {
+        self.view = view
         self.movieDetailResult = movieDetailResult
     }
 }
@@ -31,7 +31,7 @@ extension DetailViewModel: DetailViewModelInterface {
     }
     
     func viewDidLoad() {
-        MovieAnalytics.shared.sendMovieDetailEvent(movie: movieDetailResult)
+        MovieAnalyticsManager.shared.sendMovieDetailEvent(movie: movieDetailResult)
         view?.configureNavigationBar()
         view?.setUpUI()
         view?.setUI(model: movieDetailResult)

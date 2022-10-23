@@ -17,7 +17,7 @@ protocol NetworkManagerDelegate: AnyObject {
     func movieDetailsFetched(movieIMBID: String)
 }
 
-final class NetworkManager {
+final class NetworkManager: NetworkManagerProtocol {
     static let shared = NetworkManager()
     
     func makeRequest<T: Decodable>(endpoint: Endpoint, type: T.Type, completed: @escaping (Result<T, MovieError>) -> Void) {

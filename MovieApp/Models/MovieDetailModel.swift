@@ -20,4 +20,14 @@ struct MovieDetailResult: Codable {
         case language = "Language"
         case poster = "Poster"
     }
+    
+    init() {
+        title = .init()
+        genre = .init()
+        actors = .init()
+        plot = .init()
+        country = .init()
+        language = .init()
+        poster = .init()
+    }
 }

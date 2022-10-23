@@ -7,8 +7,8 @@
 
 import FirebaseAnalytics
 
-final class MovieAnalytics {
-    static let shared = MovieAnalytics()
+final class MovieAnalyticsManager {
+    static let shared = MovieAnalyticsManager()
 
     //MARK: - Send Log Event
     func sendMovieDetailEvent(movie: MovieDetailResult) {

@@ -58,11 +58,10 @@ final class HomeViewController: UIViewController, UISearchControllerDelegate {
         return label
     }()
     
-    private lazy var viewModel: HomeViewModelInterface = HomeViewModel()
+    private lazy var viewModel: HomeViewModelInterface = HomeViewModel(view: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
         viewModel.viewDidLoad()
     }
 }

@@ -112,11 +112,12 @@ final class DetailViewController: UIViewController {
     }()
     
     private var genreArray = [String]()
-    private var viewModel: DetailViewModelInterface
+    private var viewModel: DetailViewModelInterface?
     
     init(movieDetailResult: MovieDetailResult) {
-        viewModel = DetailViewModel(movieDetailResult: movieDetailResult)
         super.init(nibName: nil, bundle: nil)
+        viewModel = DetailViewModel(view: self, movieDetailResult: movieDetailResult)
+       
     }
     
     required init?(coder: NSCoder) {
@@ -125,7 +126,9 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
+        guard let viewModel = viewModel else {
+            return
+        }
         viewModel.viewDidLoad()
     }
 }
@@ -238,8 +241,9 @@ extension DetailViewController: DetailViewInterface {
         actorLabel.text = model.actors
         countryLabel.text = "Country: \(model.country)"
         languageLabel.text = "Language: \(model.language)"
-        genreArray = viewModel.genreSplit(text: model.genre)
+        genreArray = viewModel?.genreSplit(text: model.genre) ?? []
         plotTextView.text = model.plot
         
+    
     }
 }

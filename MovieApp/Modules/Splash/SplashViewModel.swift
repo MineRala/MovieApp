@@ -9,14 +9,17 @@ import Foundation
 import FirebaseRemoteConfig
 
 protocol SplashViewModelInterface {
-    var view: SplashViewInterface? { get set }
     var remoteConfig: RemoteConfig? { get set }
     
     func viewDidLoad()
 }
 
 final class SplashViewModel {
-    weak var view: SplashViewInterface?
+    private weak var view: SplashViewInterface?
+    
+    init(view: SplashViewInterface) {
+        self.view = view
+    }
     
     func fetchValue()  {
         let defaults: [String: NSObject] = [

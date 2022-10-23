@@ -8,7 +8,6 @@
 import Foundation
 
 protocol HomeViewModelInterface {
-    var view: HomeViewInterface? { get set }
     var numberOfRowsInSection: Int { get }
     var heightForRowAt: Double { get }
     
@@ -26,9 +25,14 @@ private extension HomeViewModel {
 }
 
 final class HomeViewModel {
-    weak var view: HomeViewInterface?
+    private weak var view: HomeViewInterface?
     private var searchList = [Search]()
-    private var service = NetworkManager.shared
+    private let storeManager: NetworkManagerProtocol
+    
+    init(view: HomeViewInterface, storeManager: NetworkManagerProtocol = NetworkManager.shared) {
+        self.view = view
+        self.storeManager = storeManager
+    }
 }
 
 //MARK: - HomeViewModelInterface
@@ -51,7 +55,7 @@ extension HomeViewModel: HomeViewModelInterface {
         view?.searchBarEnabled(isEnable: false)
         guard !text.isEmpty else { return }
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
-            self?.service.makeRequest(endpoint: .movieSearchTitle(movieSearchTitle: text), type: MovieResult.self, completed: { result in
+            self?.storeManager.makeRequest(endpoint: .movieSearchTitle(movieSearchTitle: text), type: MovieResult.self, completed: { result in
                 self?.view?.dissmissIndicatorForApiRequestCompleted()
                 self?.view?.searchBarEnabled(isEnable: true)
                 switch result {
@@ -73,7 +77,7 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func selectedMovie(imdbID: String) {
-        service.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
+        storeManager.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
             switch result {
             case .success(let movieDetailResult):
                 self?.view?.openView(result: movieDetailResult)
