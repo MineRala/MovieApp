@@ -8,8 +8,10 @@
 import FirebaseAnalytics
 
 final class MovieAnalytics {
-//MARK: - Send Log Event
-    static func sendMovieDetailEvent(movie: MovieDetailResult) {
+    static let shared = MovieAnalytics()
+
+    //MARK: - Send Log Event
+    func sendMovieDetailEvent(movie: MovieDetailResult) {
         Analytics.logEvent("Movie", parameters: ["movieName": movie.title, "movieGenre": movie.genre, "movieCountry": movie.country, "movieLanguage": movie.language, "movieActors": movie.actors, "moviePlot": movie.plot, "movieImage": movie.poster])
     }
 }
