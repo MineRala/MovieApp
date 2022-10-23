@@ -40,7 +40,7 @@ final class MovieNotificationManager: NSObject, MessagingDelegate {
     
     public func requestNotifications(_ application: UIApplication, completionHandler: ((Bool, UNAuthorizationStatus) -> Void)? = nil) {
         self.notificationCenter.requestAuthorization(options: authorizationOptions) { [weak self] (granted, error) in
-            self?.notificationCenter.getNotificationSettings { (settings) in
+            self?.notificationCenter.getNotificationSettings { settings in
                 let status = settings.authorizationStatus
                 self?.authorizationStatus = status
                 if let error = error {

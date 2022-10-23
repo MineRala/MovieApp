@@ -21,12 +21,12 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     func makeRequest<T: Decodable>(endpoint: Endpoint, type: T.Type, completed: @escaping (Result<T, MovieError>) -> Void) {
-        AF.request(endpoint.url).responseDecodable(of: T.self) { data in
-            guard let data = data.value else {
+        AF.request(endpoint.url).responseDecodable(of: T.self) { result in
+            guard let result = result.value else {
                 completed(.failure(.invalidData))
                 return
             }
-            completed(.success(data))
+            completed(.success(result))
         }
     }
 }

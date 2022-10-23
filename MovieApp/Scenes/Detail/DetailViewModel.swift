@@ -37,7 +37,7 @@ extension DetailViewModel: DetailViewModelInterface {
         view?.setUI(model: movieDetailResult)
     }
     
-    func genreSplit(text: String) -> [String]{
+    func genreSplit(text: String) -> [String] {
         return text.components(separatedBy: ", ")
     }
     

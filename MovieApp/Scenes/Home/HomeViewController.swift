@@ -148,8 +148,8 @@ extension HomeViewController: HomeViewInterface {
     }
     
     func dissmissIndicatorForApiRequestCompleted() {
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(30), execute: { [weak self] in
-            self?.dismissLoadingView()
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(30), execute: {
+            self.dismissLoadingView()
         })
     }
     

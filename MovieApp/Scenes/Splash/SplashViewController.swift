@@ -58,8 +58,7 @@ extension SplashViewController: SplashViewInterface {
     
     func present() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            let vc = HomeViewController()
-            self.navigationController?.pushViewController(vc, animated: false)
+            self.navigationController?.pushViewController(HomeViewController(), animated: false)
         }
     }
     

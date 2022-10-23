@@ -51,7 +51,7 @@ extension HomeViewModel: HomeViewModelInterface {
         view?.searchBarEnabled(isEnable: false)
         guard !text.isEmpty else { return }
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
-            self?.service.makeRequest(endpoint: .movieSearchTitle(movieSearchTitle: text), type: MovieResult.self, completed: { [weak self] result in
+            self?.service.makeRequest(endpoint: .movieSearchTitle(movieSearchTitle: text), type: MovieResult.self, completed: { result in
                 self?.view?.dissmissIndicatorForApiRequestCompleted()
                 self?.view?.searchBarEnabled(isEnable: true)
                 switch result {
@@ -73,10 +73,10 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func selectedMovie(imdbID: String) {
-        service.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { result in
+        service.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
             switch result {
             case .success(let movieDetailResult):
-                self.view?.openView(result: movieDetailResult)
+                self?.view?.openView(result: movieDetailResult)
             case .failure(let error):
                 print(error)
             }
