@@ -6,7 +6,7 @@
 - Detail Screen
 
 # Compatibility
-- Requires iOS 13.0 or later. 
+- Requires iOS 14.0 or later. 
 - Compatible with iPhone.
 
 # Architecture
