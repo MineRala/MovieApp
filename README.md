@@ -24,7 +24,7 @@
 - MVVM
 - Protocol-Delegate
 - Firebase Analytics for logs
-- Firebase Notification
+- Firebase Notification(Apns key is missing because I don't have an Apple Developer account.)
 - Unit Tests
 
 ## 3rd Party Libraries
