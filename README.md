@@ -14,12 +14,22 @@
 
 # Features
 - Swift Package Manager was used. (SnapKit, Alamofire, Kingfisher)
-- Check internet connection.
+- Checking the internet connection.
+- Used OMDB API for movie data.
+
+# Technologies
+- Programmatic UI(Snapkit)
+- Connectivity(Alamofire)
+- Firebase Remote Config
+- MVVM
+- Protocol-Delegate
+- Firebase Analytics for logs
+- Firebase Notification
 - Unit Tests
 
 ## 3rd Party Libraries
 > <a href="https://github.com/onevcat/Kingfisher">Kingfisher</a>\
-> <a href="https://github.com/SnapKit/SnapKit">SnapKit</a>
+> <a href="https://github.com/SnapKit/SnapKit">SnapKit</a>\
 > <a href="https://github.com/Alamofire/Alamofire>Alamofire</a>
 
 ### Method to use SwiftPM:
