@@ -50,6 +50,4 @@ final class MockSplashViewController: SplashViewInterface {
         invokedDisplayLabelValue = true
         invokedDisplayLabelValueCount += 1
     }
-    
-    
 }

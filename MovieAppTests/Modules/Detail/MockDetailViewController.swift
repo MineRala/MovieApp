@@ -33,5 +33,4 @@ final class MockDetailViewController: DetailViewInterface {
         invokedSetUI = true
         invokedSetUICount += 1
     }
-    
 }

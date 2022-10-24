@@ -64,19 +64,23 @@ final class MockHomeViewController: HomeViewInterface {
         invokedLoadIndicatorForApiRequestCompletedCount += 1
     }
     
-    var invokedsearchBarEnabled = false
+    var invokedSearchBarEnabled = false
     var invokedSearchBarEnabledCount = 0
     var invokedSearchBarEnabledParameters: (isEnable: Bool, Void)?
     var invokedSearchBarEnabledParametersList = [(isEnable: Bool, Void)]()
    
     func searchBarEnabled(isEnable: Bool) {
-        invokedsearchBarEnabled = true
+        invokedSearchBarEnabled = true
         invokedSearchBarEnabledCount += 1
     }
     
+    var invokedEmptyLableIsHidden = false
+    var invokedEmptyLableIsHiddenCount = 0
+    var invokedEmptyLableIsHiddenParameters: (isHidden: Bool, Void)?
+    var invokedEmptyLableIsHiddenParametersList = [(isHidden: Bool, Void)]()
+    
     func emptyLabelIsHidden(isHidden: Bool) {
-        
+        invokedEmptyLableIsHidden = true
+        invokedEmptyLableIsHiddenCount += 1
     }
-    
-    
 }

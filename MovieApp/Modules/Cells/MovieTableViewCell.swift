@@ -155,6 +155,5 @@ extension MovieTableViewCell {
         titleLabel.text = model.title
         typeLabel.text = model.type
         yearLabel.text = model.year
-       
     }
 }

@@ -24,10 +24,6 @@ final class DetailViewModelTests: XCTestCase {
         viewModel = nil
     }
     
-    func test_getMovieResult() {
-        XCTAssertNotNil(viewModel)
-    }
-    
     func test_viewDidLoad_InvokesRequiredMethods() {
         XCTAssertFalse(view.invokeConfigureNavigationBar)
         XCTAssertFalse(view.invokedSetUpUI)
@@ -39,6 +35,4 @@ final class DetailViewModelTests: XCTestCase {
         XCTAssertEqual(view.invokedSetUpUICount, 1)
         XCTAssertEqual(view.invokedSetUICount, 1)
     }
-    
-     
 }

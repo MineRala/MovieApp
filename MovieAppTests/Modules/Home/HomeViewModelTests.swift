@@ -41,10 +41,53 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(view.invokedSetUpUICount, 1)
     }
     
-    func test_InvokesSetMovies() {
+    func test_InvokesSetMoviesSuccess() {
         XCTAssertFalse(view.invokedLoadIndicatorForApiRequestCompleted)
-        XCTAssertFalse(((view.invokedSearchBarEnabledParameters?.0) != nil))
-    }
+        XCTAssertFalse(view.invokedSearchBarEnabled)
+        XCTAssertFalse(view.invokedDissmissIndicatorForApiRequestCompleted)
+        XCTAssertFalse(view.invokedSearchBarEnabled)
+        XCTAssertFalse(view.invokedEmptyLableIsHidden)
+        XCTAssertFalse(view.invokedReloadTableViewAfterIndicator)
+        
+        viewModel.setMovies(text: "Abc")
+        
+        XCTAssertEqual(view.invokedLoadIndicatorForApiRequestCompletedCount, 1)
+        XCTAssertEqual(view.invokedSearchBarEnabledCount, 1)
 
+    }
     
+    func test_InvokesSetMoviesFail() {
+        XCTAssertFalse(view.invokedLoadIndicatorForApiRequestCompleted)
+        XCTAssertFalse(view.invokedSearchBarEnabled)
+        XCTAssertFalse(view.invokedDissmissIndicatorForApiRequestCompleted)
+        XCTAssertFalse(view.invokedSearchBarEnabled)
+        XCTAssertFalse(view.invokedEmptyLableIsHidden)
+        XCTAssertFalse(view.invokedReloadTableViewAfterIndicator)
+        
+        viewModel.setMovies(text: "A")
+        
+        XCTAssertEqual(view.invokedLoadIndicatorForApiRequestCompletedCount, 1)
+        XCTAssertEqual(view.invokedSearchBarEnabledCount, 1)
+//        XCTAssertEqual(view.invokedDissmissIndicatorForApiRequestCompletedCount, 1)
+//        XCTAssertEqual(view.invokedSearchBarEnabledCount, 2)
+//        XCTAssertEqual(view.invokedEmptyLableIsHiddenCount, 2)
+//        XCTAssertEqual(view.invokedReloadTableViewAfterIndicatorCount, 1)
+
+    }
+    
+    func test_InvokesSelectedMovieSuccess() {
+        XCTAssertFalse(view.invokedOpenView)
+        
+        viewModel.selectedMovie(imdbID: "tt0386438")
+        
+        //XCTAssertEqual(view.invokedOpenViewCount, 1)
+    }
+    
+    func test_InvokesSelectedMovieFail() {
+        XCTAssertFalse(view.invokedOpenView)
+        
+        viewModel.selectedMovie(imdbID: "0000000")
+        
+        XCTAssertEqual(view.invokedOpenViewCount, 0)
+    }
 }

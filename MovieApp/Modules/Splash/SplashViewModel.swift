@@ -9,7 +9,7 @@ import Foundation
 import FirebaseRemoteConfig
 
 protocol SplashViewModelInterface {
-    var remoteConfig: RemoteConfig? { get set }
+    var remoteConfig: RemoteConfig? { get }
     
     func viewDidLoad()
 }
@@ -21,7 +21,7 @@ final class SplashViewModel {
         self.view = view
     }
     
-    func fetchValue()  {
+    private func fetchValue()  {
         let defaults: [String: NSObject] = [
             "labelText": "loodos" as NSObject
         ]
@@ -62,7 +62,6 @@ extension SplashViewModel: SplashViewModelInterface {
         get {
             RemoteConfig.remoteConfig()
         }
-        set {}
     }
     
     func viewDidLoad() {

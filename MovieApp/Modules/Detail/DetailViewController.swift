@@ -138,6 +138,10 @@ extension DetailViewController {
     @objc func close() {
         closeView()
     }
+    
+    private func genreSplit(text: String) -> [String] {
+        return text.components(separatedBy: ", ")
+    }
 }
 
 //MARK: - CollectionView DataSource
@@ -241,9 +245,7 @@ extension DetailViewController: DetailViewInterface {
         actorLabel.text = model.actors
         countryLabel.text = "Country: \(model.country)"
         languageLabel.text = "Language: \(model.language)"
-        genreArray = viewModel?.genreSplit(text: model.genre) ?? []
+        genreArray = genreSplit(text: model.genre)
         plotTextView.text = model.plot
-        
-    
     }
 }

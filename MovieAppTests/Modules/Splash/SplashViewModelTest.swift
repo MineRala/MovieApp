@@ -49,5 +49,4 @@ final class SplashViewModelTests: XCTestCase {
         XCTAssertEqual(view.invokedSetViewColorCount, 1)
         XCTAssertFalse(view.isConnect)
     }
-    
 }
