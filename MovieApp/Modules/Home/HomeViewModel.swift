@@ -12,10 +12,11 @@ protocol HomeViewModelInterface {
     var heightForRowAt: Double { get }
     
     func viewDidLoad()
-    func selectedMovie(imdbID: String)
+    func viewWillAppear()
     func removeAllMovies()
     func setMovies(text: String)
     func getMovie(index: Int) -> Search
+    func didSelectRowAt(index: Int)
 }
 
 private extension HomeViewModel {
@@ -28,10 +29,22 @@ final class HomeViewModel {
     private weak var view: HomeViewInterface?
     private var searchList = [Search]()
     private let storeManager: NetworkManagerProtocol
+    private var isPresentingVC = true
     
     init(view: HomeViewInterface, storeManager: NetworkManagerProtocol = NetworkManager.shared) {
         self.view = view
         self.storeManager = storeManager
+    }
+
+    private func selectedMovie(imdbID: String) {
+        storeManager.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
+            switch result {
+            case .success(let movieDetailResult):
+                self?.view?.openView(result: movieDetailResult)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
@@ -48,6 +61,10 @@ extension HomeViewModel: HomeViewModelInterface {
     func viewDidLoad() {
         view?.setUpNavigationBar()
         view?.setUpUI()
+    }
+
+    func viewWillAppear() {
+        isPresentingVC = true
     }
 
     func setMovies(text: String) {
@@ -75,19 +92,15 @@ extension HomeViewModel: HomeViewModelInterface {
     func getMovie(index: Int) -> Search {
         searchList[index]
     }
-    
-    func selectedMovie(imdbID: String) {
-        storeManager.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
-            switch result {
-            case .success(let movieDetailResult):
-                self?.view?.openView(result: movieDetailResult)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-        
+
     func removeAllMovies() {
         searchList.removeAll()
+    }
+
+    func didSelectRowAt(index: Int) {
+        if isPresentingVC {
+            isPresentingVC = false
+            selectedMovie(imdbID: searchList[index].imdbID)
+        }
     }
 }

@@ -64,6 +64,11 @@ final class HomeViewController: UIViewController, UISearchControllerDelegate {
         super.viewDidLoad()
         viewModel.viewDidLoad()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
+    }
 }
 
 //MARK: - TableView DataSource
@@ -86,7 +91,7 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.selectedMovie(imdbID: viewModel.getMovie(index: indexPath.row).imdbID)
+        viewModel.didSelectRowAt(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
