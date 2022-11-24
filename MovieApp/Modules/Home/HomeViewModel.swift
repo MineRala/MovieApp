@@ -68,7 +68,7 @@ extension HomeViewModel: HomeViewModelInterface {
     }
 
     func setMovies(text: String) {
-        self.view?.loadIndicatorForApiRequestCompleted()
+        view?.loadIndicatorForApiRequestCompleted()
         view?.searchBarEnabled(isEnable: false)
         guard !text.isEmpty else { return }
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(1500), execute: { [weak self] in
