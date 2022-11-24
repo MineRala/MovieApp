@@ -21,7 +21,7 @@ final class SplashViewController: UIViewController {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = Color.appBase
-        label.font = FuturaFont.condensedExtraBold.of(size: 28)
+        label.font = FuturaFont.condensedExtraBold.of(size: 24)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true

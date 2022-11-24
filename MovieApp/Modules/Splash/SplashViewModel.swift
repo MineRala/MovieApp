@@ -23,7 +23,7 @@ final class SplashViewModel {
     
     private func fetchValue()  {
         let defaults: [String: NSObject] = [
-            "labelText": "loodos" as NSObject
+            "labelText": "Movie App" as NSObject
         ]
         remoteConfig?.setDefaults(defaults)
         let settings = RemoteConfigSettings()
