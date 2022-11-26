@@ -9,6 +9,7 @@ import XCTest
 @testable import MovieApp
 
 final class SplashViewModelTests: XCTestCase {
+    //sut
     private var viewModel: SplashViewModel!
     private var view: MockSplashViewController!
    
@@ -25,11 +26,7 @@ final class SplashViewModelTests: XCTestCase {
     }
     
     func test_viewDidLoad_InvokesRequiredMethods_ConnectedInternet() {
-        XCTAssertFalse(view.invokedSetViewColor)
-        XCTAssertFalse(view.invokedDisplayLabelValue)
-        XCTAssertFalse(view.invokedSetUpLabel)
-        XCTAssertFalse(view.invokedPresent)
-        
+
         viewModel.viewDidLoad()
         
         XCTAssertEqual(view.invokedSetViewColorCount, 1)
@@ -39,14 +36,11 @@ final class SplashViewModelTests: XCTestCase {
     }
     
     func test_viewDidLoad_InvokedRequiredMethods_DisConnectedInternet() {
-        view.isConnect = false
-       
-        XCTAssertFalse(view.invokedSetViewColor)
-        XCTAssertFalse(view.invokedShowToast)
-        
+
         viewModel.viewDidLoad()
+       
+       // XCTAssertTrue(invo)
         
-        XCTAssertEqual(view.invokedSetViewColorCount, 1)
-        XCTAssertFalse(view.isConnect)
+       
     }
 }

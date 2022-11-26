@@ -17,6 +17,8 @@
 		E87D1DAE2904942A0028EDA9 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DAD2904942A0028EDA9 /* DetailViewModel.swift */; };
 		E87D1DB6290589310028EDA9 /* MovieAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DB5290589310028EDA9 /* MovieAppTests.swift */; };
 		E87D1DC129058D2C0028EDA9 /* MockHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DC029058D2C0028EDA9 /* MockHomeViewController.swift */; };
+		E8B362752930D7640062376F /* SplashViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B362742930D7640062376F /* SplashViewControllerTest.swift */; };
+		E8B362772930D9150062376F /* MockSplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B362762930D9150062376F /* MockSplashViewModel.swift */; };
 		E8DE8F0A28FD4A470037598C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0928FD4A470037598C /* AppDelegate.swift */; };
 		E8DE8F0C28FD4A470037598C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0B28FD4A470037598C /* SceneDelegate.swift */; };
 		E8DE8F0E28FD4A470037598C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0D28FD4A470037598C /* HomeViewController.swift */; };
@@ -70,6 +72,8 @@
 		E87D1DB5290589310028EDA9 /* MovieAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAppTests.swift; sourceTree = "<group>"; };
 		E87D1DBE290589C60028EDA9 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		E87D1DC029058D2C0028EDA9 /* MockHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewController.swift; sourceTree = "<group>"; };
+		E8B362742930D7640062376F /* SplashViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewControllerTest.swift; sourceTree = "<group>"; };
+		E8B362762930D9150062376F /* MockSplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSplashViewModel.swift; sourceTree = "<group>"; };
 		E8DE8F0628FD4A470037598C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8DE8F0928FD4A470037598C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8DE8F0B28FD4A470037598C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +298,8 @@
 			children = (
 				E8EEB48E2905C11E00B1900D /* SplashViewModelTest.swift */,
 				E8EEB4902905C1BA00B1900D /* MockSplashViewController.swift */,
+				E8B362742930D7640062376F /* SplashViewControllerTest.swift */,
+				E8B362762930D9150062376F /* MockSplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -424,9 +430,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E87D1DC129058D2C0028EDA9 /* MockHomeViewController.swift in Sources */,
+				E8B362772930D9150062376F /* MockSplashViewModel.swift in Sources */,
 				E8EEB48F2905C11E00B1900D /* SplashViewModelTest.swift in Sources */,
 				E8EEB4962905E81300B1900D /* MockDetailViewController.swift in Sources */,
 				E87D1DB6290589310028EDA9 /* MovieAppTests.swift in Sources */,
+				E8B362752930D7640062376F /* SplashViewControllerTest.swift in Sources */,
 				E8EEB4942905E80800B1900D /* DetailViewModelTests.swift in Sources */,
 				E8EEB48A2905A25500B1900D /* MockNetworkManager.swift in Sources */,
 				E8EEB48B2905AD0400B1900D /* HomeViewModelTests.swift in Sources */,

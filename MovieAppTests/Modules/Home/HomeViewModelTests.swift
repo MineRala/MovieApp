@@ -11,17 +11,13 @@ import XCTest
 final class HomeViewModelTests: XCTestCase {
     private var viewModel: HomeViewModel!
     private var view: MockHomeViewController!
-    private var searchList: [Search]!
     private var storeManager: MockNetworkManager!
-    private var isPresentingVC: Bool!
-
+ 
     override func setUp() {
         super.setUp()
         view = .init()
-        searchList = .init()
         storeManager = .init()
         viewModel = .init(view: view, storeManager: storeManager)
-        isPresentingVC = true
     }
 
     override func tearDown() {
@@ -29,8 +25,6 @@ final class HomeViewModelTests: XCTestCase {
         view =  nil
         storeManager = nil
         viewModel = nil
-        isPresentingVC = nil
-        
     }
     
     func test_heightForRowAt() {
@@ -38,8 +32,6 @@ final class HomeViewModelTests: XCTestCase {
     }
  
     func test_viewDidLoad_InvokesRequiredMethods() {
-        XCTAssertFalse(view.invokedSetUpNavigationBar)
-        XCTAssertFalse(view.invokedSetUpUI)
         
         viewModel.viewDidLoad()
         
@@ -48,20 +40,24 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_viewWillAppear_InvokesRequiredMethods() {
-        XCTAssertTrue(isPresentingVC)
+//        XCTAssertFalse(isPresentingVC)
         
         viewModel.viewWillAppear()
         
-        XCTAssertTrue(isPresentingVC)
+        XCTAssertTrue(viewModel.isPresentingVC)
     }
         
+    func test_InvokesRemoveAllMoviesMethods() {
+        viewModel.searchList = [Search(title: "The Lego Movie", year: "", imdbID: "", type: "", poster: ""), Search(title: "The Simpsons Movie", year: "", imdbID: "", type: "", poster: "")]
+      
+        XCTAssertFalse(viewModel.searchList.isEmpty)
+        
+        viewModel.removeAllMovies()
+        
+        XCTAssertTrue(viewModel.searchList.isEmpty)
+    }
+    
     func test_InvokesSetMoviesSuccess() {
-        XCTAssertFalse(view.invokedLoadIndicatorForApiRequestCompleted)
-        XCTAssertFalse(view.invokedSearchBarEnabled)
-        XCTAssertFalse(view.invokedDissmissIndicatorForApiRequestCompleted)
-        XCTAssertFalse(view.invokedSearchBarEnabled)
-        XCTAssertFalse(view.invokedEmptyLableIsHidden)
-        XCTAssertFalse(view.invokedReloadTableViewAfterIndicator)
         
         viewModel.setMovies(text: "Abc")
         
@@ -70,25 +66,7 @@ final class HomeViewModelTests: XCTestCase {
     
     }
     
-    func test_InvokesRemoveAllMoviesMethods() {
-        searchList = [Search(title: "The Lego Movie", year: "", imdbID: "", type: "", poster: ""), Search(title: "The Simpsons Movie", year: "", imdbID: "", type: "", poster: "")]
-        print("SearchList Count= \(searchList.count)")
-        XCTAssertFalse(searchList.isEmpty)
-        
-        viewModel.removeAllMovies()
-        print("SearchList Count= \(searchList.count)")
-        // RemoveAllMovies fonksiyonuna giriyor ama searchList'i nil buluyor.
-        // Neden!!
-       // XCTAssertTrue(searchList.isEmpty)
-    }
-    
     func test_InvokesSetMoviesFail() {
-        XCTAssertFalse(view.invokedLoadIndicatorForApiRequestCompleted)
-        XCTAssertFalse(view.invokedSearchBarEnabled)
-        XCTAssertFalse(view.invokedDissmissIndicatorForApiRequestCompleted)
-        XCTAssertFalse(view.invokedSearchBarEnabled)
-        XCTAssertFalse(view.invokedEmptyLableIsHidden)
-        XCTAssertFalse(view.invokedReloadTableViewAfterIndicator)
         
         viewModel.setMovies(text: "A")
         
@@ -99,5 +77,11 @@ final class HomeViewModelTests: XCTestCase {
 //        XCTAssertEqual(view.invokedEmptyLableIsHiddenCount, 2)
 //        XCTAssertEqual(view.invokedReloadTableViewAfterIndicatorCount, 1)
 
+    }
+    
+    func test_InvokesDidSelectRowAt() {
+        viewModel.searchList = [Search(title: "The Lego Movie", year: "", imdbID: "", type: "", poster: ""), Search(title: "The Simpsons Movie", year: "", imdbID: "", type: "", poster: "")]
+        viewModel.didSelectRowAt(index: 0)
+        XCTAssertFalse(viewModel.isPresentingVC)
     }
 }

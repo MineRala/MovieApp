@@ -27,15 +27,15 @@ private extension HomeViewModel {
 
 final class HomeViewModel {
     private weak var view: HomeViewInterface?
-    private var searchList = [Search]()
+    var searchList = [Search]()
     private let storeManager: NetworkManagerProtocol
-    private var isPresentingVC = true
+    var isPresentingVC = true
     
     init(view: HomeViewInterface, storeManager: NetworkManagerProtocol = NetworkManager.shared) {
         self.view = view
         self.storeManager = storeManager
     }
-
+// tıkladığında sayfayı aç, requesti Detailde at  didload
     private func selectedMovie(imdbID: String) {
         storeManager.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
             switch result {
