@@ -17,6 +17,7 @@
 		E87D1DAE2904942A0028EDA9 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DAD2904942A0028EDA9 /* DetailViewModel.swift */; };
 		E87D1DB6290589310028EDA9 /* MovieAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DB5290589310028EDA9 /* MovieAppTests.swift */; };
 		E87D1DC129058D2C0028EDA9 /* MockHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DC029058D2C0028EDA9 /* MockHomeViewController.swift */; };
+		E88293E62932240500C769A1 /* MockSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88293E52932240500C769A1 /* MockSearchList.swift */; };
 		E8B362752930D7640062376F /* SplashViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B362742930D7640062376F /* SplashViewControllerTest.swift */; };
 		E8B362772930D9150062376F /* MockSplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B362762930D9150062376F /* MockSplashViewModel.swift */; };
 		E8DE8F0A28FD4A470037598C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0928FD4A470037598C /* AppDelegate.swift */; };
@@ -72,6 +73,7 @@
 		E87D1DB5290589310028EDA9 /* MovieAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAppTests.swift; sourceTree = "<group>"; };
 		E87D1DBE290589C60028EDA9 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		E87D1DC029058D2C0028EDA9 /* MockHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewController.swift; sourceTree = "<group>"; };
+		E88293E52932240500C769A1 /* MockSearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchList.swift; sourceTree = "<group>"; };
 		E8B362742930D7640062376F /* SplashViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewControllerTest.swift; sourceTree = "<group>"; };
 		E8B362762930D9150062376F /* MockSplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSplashViewModel.swift; sourceTree = "<group>"; };
 		E8DE8F0628FD4A470037598C /* MovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				E87D1DBC2905899B0028EDA9 /* Modules */,
+				E88293E52932240500C769A1 /* MockSearchList.swift */,
 				E8EEB4892905A25500B1900D /* MockNetworkManager.swift */,
 				E87D1DB5290589310028EDA9 /* MovieAppTests.swift */,
 			);
@@ -429,6 +432,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E88293E62932240500C769A1 /* MockSearchList.swift in Sources */,
 				E87D1DC129058D2C0028EDA9 /* MockHomeViewController.swift in Sources */,
 				E8B362772930D9150062376F /* MockSplashViewModel.swift in Sources */,
 				E8EEB48F2905C11E00B1900D /* SplashViewModelTest.swift in Sources */,

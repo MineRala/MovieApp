@@ -48,7 +48,7 @@ final class HomeViewModelTests: XCTestCase {
     }
         
     func test_InvokesRemoveAllMoviesMethods() {
-        viewModel.searchList = [Search(title: "The Lego Movie", year: "", imdbID: "", type: "", poster: ""), Search(title: "The Simpsons Movie", year: "", imdbID: "", type: "", poster: "")]
+        viewModel.searchList = MockSearchList.mockSearchList
       
         XCTAssertFalse(viewModel.searchList.isEmpty)
         
@@ -80,7 +80,7 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     func test_InvokesDidSelectRowAt() {
-        viewModel.searchList = [Search(title: "The Lego Movie", year: "", imdbID: "", type: "", poster: ""), Search(title: "The Simpsons Movie", year: "", imdbID: "", type: "", poster: "")]
+        viewModel.searchList = MockSearchList.mockSearchList
         viewModel.didSelectRowAt(index: 0)
         XCTAssertFalse(viewModel.isPresentingVC)
     }
