@@ -63,6 +63,7 @@ final class HomeViewModelTests: XCTestCase {
         
         XCTAssertEqual(view.invokedLoadIndicatorForApiRequestCompletedCount, 1)
         XCTAssertEqual(view.invokedSearchBarEnabledCount, 1)
+     //   XCTAssertEqual(view.invokedReloadTableViewAfterIndicatorCount, 1)
     
     }
     

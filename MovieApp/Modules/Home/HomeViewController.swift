@@ -139,6 +139,9 @@ extension HomeViewController: HomeViewInterface {
         emptyLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
+        
+        /// Force crash for firebase crashlytics.
+//        fatalError()
     }
     
     func openView(result: MovieDetailResult) {

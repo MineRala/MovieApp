@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E8299C5A2900A47700F036B3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8299C592900A47700F036B3 /* DetailViewController.swift */; };
+		E8303E6B2B309C0B004C51CA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E8303E6A2B309C0B004C51CA /* FirebaseCrashlytics */; };
 		E87D1DA12902BC100028EDA9 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA02902BC100028EDA9 /* Color.swift */; };
 		E87D1DA3290405550028EDA9 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA2290405550028EDA9 /* GenreCollectionViewCell.swift */; };
 		E87D1DA529043A760028EDA9 /* MovieAnalysticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DA429043A760028EDA9 /* MovieAnalysticsManager.swift */; };
@@ -118,6 +119,7 @@
 				E87D1DA82904406E0028EDA9 /* FirebaseMessaging in Frameworks */,
 				E8DE8F2928FD71CC0037598C /* Kingfisher in Frameworks */,
 				E8DE8F2328FD717C0037598C /* SnapKit in Frameworks */,
+				E8303E6B2B309C0B004C51CA /* FirebaseCrashlytics in Frameworks */,
 				E8DE8F3328FD8FB60037598C /* FirebaseAnalytics in Frameworks */,
 				E8DE8F2628FD718C0037598C /* Alamofire in Frameworks */,
 				E8DE8F3528FD8FB60037598C /* FirebaseRemoteConfig in Frameworks */,
@@ -127,6 +129,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E8303E692B309C0B004C51CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E87D1DB4290589310028EDA9 /* MovieAppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +172,7 @@
 				E8DE8F0828FD4A470037598C /* MovieApp */,
 				E87D1DB4290589310028EDA9 /* MovieAppTests */,
 				E8DE8F0728FD4A470037598C /* Products */,
+				E8303E692B309C0B004C51CA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -344,6 +354,7 @@
 				E8DE8F0228FD4A470037598C /* Sources */,
 				E8DE8F0328FD4A470037598C /* Frameworks */,
 				E8DE8F0428FD4A470037598C /* Resources */,
+				E8303E682B308FCE004C51CA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -357,6 +368,7 @@
 				E8DE8F3228FD8FB60037598C /* FirebaseAnalytics */,
 				E8DE8F3428FD8FB60037598C /* FirebaseRemoteConfig */,
 				E87D1DA72904406E0028EDA9 /* FirebaseMessaging */,
+				E8303E6A2B309C0B004C51CA /* FirebaseCrashlytics */,
 			);
 			productName = MovieApp;
 			productReference = E8DE8F0628FD4A470037598C /* MovieApp.app */;
@@ -426,6 +438,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E8303E682B308FCE004C51CA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E87D1DAF290589310028EDA9 /* Sources */ = {
@@ -657,6 +694,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = PJ9SW5348L;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieApp/Info.plist;
@@ -783,6 +821,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E8303E6A2B309C0B004C51CA /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
 		E87D1DA72904406E0028EDA9 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
