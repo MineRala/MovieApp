@@ -111,6 +111,8 @@ extension HomeViewController: UISearchBarDelegate {
         viewModel.removeAllMovies()
         tableView.reloadData()
     }
+    
+    // TODO: - Searchbardaki close butonuna tıklayınca liste ekranı temizlensin.(item olsa da olmasa da temizlesin. Beyaz liste haline getirsin.)
 }
 
 // MARK: - HomeViewInterface

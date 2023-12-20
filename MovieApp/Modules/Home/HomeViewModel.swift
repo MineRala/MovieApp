@@ -19,17 +19,17 @@ protocol HomeViewModelInterface {
     func didSelectRowAt(index: Int)
 }
 
-private extension HomeViewModel {
-    enum Constant {
-        static let cellHeight: Double = 150.0
-    }
+// MARK: - Constants
+private struct Constant {
+    static let cellHeight: Double = 150.0
 }
 
+// MARK: - Class Bone
 final class HomeViewModel {
     private weak var view: HomeViewInterface?
-    var searchList = [Search]()
+    internal var searchList = [Search]()
     private let storeManager: NetworkManagerProtocol
-    var isPresentingVC = true
+    internal var isPresentingVC = true
     
     init(view: HomeViewInterface, storeManager: NetworkManagerProtocol = NetworkManager.shared) {
         self.view = view

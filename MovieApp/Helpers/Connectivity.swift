@@ -10,6 +10,6 @@ import Alamofire
 
 final class Connectivity {
     static var isConnectedToInternet: Bool {
-            return NetworkReachabilityManager()!.isReachable
-        }
+        return NetworkReachabilityManager()!.isReachable
+    }
 }
