@@ -107,12 +107,20 @@ extension HomeViewController: UISearchBarDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        resetMovieList()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            resetMovieList()
+        }
+    }
+
+    private func resetMovieList() {
         emptyLabel.isHidden = true
         viewModel.removeAllMovies()
         tableView.reloadData()
     }
-    
-    // TODO: - Searchbardaki close butonuna tıklayınca liste ekranı temizlensin.(item olsa da olmasa da temizlesin. Beyaz liste haline getirsin.)
 }
 
 // MARK: - HomeViewInterface
