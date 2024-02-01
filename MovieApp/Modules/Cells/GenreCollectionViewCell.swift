@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MyCustomConstraints
 
 final class GenreCollectionViewCell: UICollectionViewCell {
 
@@ -15,7 +16,9 @@ final class GenreCollectionViewCell: UICollectionViewCell {
         label.font = FuturaFont.bold.of(size: 16)
         label.textColor = Color.black
         label.textAlignment = .center
-        label.minimumScaleFactor = 12
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 1
         return label
     }()
     
@@ -38,9 +41,10 @@ final class GenreCollectionViewCell: UICollectionViewCell {
 extension GenreCollectionViewCell {
     private func configureCell() {
         contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        titleLabel
+            .leading(to: contentView, .init(constant: 4))
+            .trailing(to: contentView, .init(constant: -4))
+            .centerY(to: contentView)
     }
 }
 

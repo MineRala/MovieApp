@@ -8,9 +8,11 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import MyCustomConstraints
 
-private enum MovieTableViewCellConstnt {
-    static let viewColor = Color.cellBackgrounColor
+private enum MovieTableViewCellConstant {
+    static let cellColor = Color.cellBackgrounColor
+    static let viewColor = Color.viewBackgrounColor
     static let borderColor = Color.black
 }
 
@@ -18,10 +20,10 @@ final class MovieTableViewCell: UITableViewCell {
     
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = MovieTableViewCellConstnt.viewColor
+        view.backgroundColor = MovieTableViewCellConstant.cellColor
         view.layer.borderWidth = 1
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.borderColor = MovieTableViewCellConstnt.borderColor.withAlphaComponent(0.3).cgColor
+        view.layer.borderColor = MovieTableViewCellConstant.borderColor.withAlphaComponent(0.3).cgColor
         view.layer.cornerRadius = 12
         return view
     }()
@@ -67,8 +69,8 @@ final class MovieTableViewCell: UITableViewCell {
     private lazy var typeView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = MovieTableViewCellConstnt.viewColor.withAlphaComponent(0.5)
-        view.layer.cornerRadius = 12
+        view.backgroundColor = MovieTableViewCellConstant.viewColor.withAlphaComponent(0.25)
+        view.layer.cornerRadius = 10
         return view
     }()
     
@@ -108,6 +110,16 @@ extension MovieTableViewCell {
             make.top.left.equalToSuperview().offset(8)
             make.width.equalToSuperview().multipliedBy(0.35)
         }
+        
+//        posterImageView
+//            .bottom(to: containerView, .init(constant: -8))
+//            .top(to: containerView, .init(constant: 8))
+//            .leading(to: containerView, .init(constant: 8))
+//            .setWidth(to: containerView, multiplierValue: .init(multiplier: 0.35))
+        
+//        posterImageView.snp.makeConstraints { make in
+//            make.width.equalToSuperview().multipliedBy(0.35)
+//        }
         
         containerView.addSubview(titleLabel)
         

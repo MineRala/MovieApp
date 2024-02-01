@@ -100,6 +100,15 @@
       }
     },
     {
+      "identity" : "mycustomconstraints",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MineRala/MyCustomConstraints.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c3ec81840c1c36bdf33411327e0a88cf94dcfe5e"
+      }
+    },
+    {
       "identity" : "nanopb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/nanopb.git",

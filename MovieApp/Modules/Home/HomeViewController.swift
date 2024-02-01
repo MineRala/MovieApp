@@ -21,7 +21,7 @@ private enum HomeViewConstant {
 protocol HomeViewInterface: AnyObject {
     func setUpNavigationBar()
     func setUpUI()
-    func openView(result: MovieDetailResult)
+    func openView(imdbID: String)
     func reloadTableViewAfterIndicator()
     func dissmissIndicatorForApiRequestCompleted()
     func loadIndicatorForApiRequestCompleted()
@@ -154,8 +154,10 @@ extension HomeViewController: HomeViewInterface {
 //        fatalError()
     }
     
-    func openView(result: MovieDetailResult) {
-        openView(viewController: DetailViewController(movieDetailResult: result))
+    func openView(imdbID: String) {
+        let detailVC = DetailViewController()
+        detailVC.imdbID = imdbID
+        openView(viewController: detailVC)
     }
     
     func reloadTableViewAfterIndicator() {

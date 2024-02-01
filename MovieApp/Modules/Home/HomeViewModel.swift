@@ -35,16 +35,9 @@ final class HomeViewModel {
         self.view = view
         self.storeManager = storeManager
     }
-// tıkladığında sayfayı aç, requesti Detailde at  didload
+
     private func selectedMovie(imdbID: String) {
-        storeManager.makeRequest(endpoint: .detailMovie(movieIMBID: imdbID), type: MovieDetailResult.self) { [weak self] result in
-            switch result {
-            case .success(let movieDetailResult):
-                self?.view?.openView(result: movieDetailResult)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        self.view?.openView(imdbID: imdbID)
     }
 }
 

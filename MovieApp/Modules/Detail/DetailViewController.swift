@@ -13,7 +13,7 @@ private enum DetailViewConstant {
     static let navigationBarTitle = "Movie Detail"
     static let titleTextAttributesColor = Color.appBase
     static let backgroundColor = Color.white
-    static let cellBackgroundColor = Color.cellBackgrounColor
+    static let cellBackgroundColor = Color.viewBackgrounColor
     static let cellBorderColor = Color.black
     static let backButtonIcon = "arrow.backward"
     static let cellSpacing = 20.0
@@ -27,6 +27,10 @@ protocol DetailViewInterface: AnyObject {
     func configureNavigationBar()
     func setUpUI()
     func setUI(model: MovieDetailResult)
+    func showErrorAlert(title: String, description: String, actions: AlertAction)
+    func backToHomeScreen()
+    func loadIndicatorForApiRequestCompleted()
+    func dissmissIndicatorForApiRequestCompleted()
 }
 
 final class DetailViewController: UIViewController {
@@ -111,13 +115,17 @@ final class DetailViewController: UIViewController {
         return collectionView
     }()
     
-    private var genreArray = [String]()
+    private var genreArray = [String]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     private var viewModel: DetailViewModelInterface?
+    public var imdbID: String?
     
-    init(movieDetailResult: MovieDetailResult) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        viewModel = DetailViewModel(view: self, movieDetailResult: movieDetailResult)
-       
+        viewModel = DetailViewModel(view: self)
     }
     
     required init?(coder: NSCoder) {
@@ -126,10 +134,8 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let viewModel = viewModel else {
-            return
-        }
-        viewModel.viewDidLoad()
+        guard let viewModel else { return }
+        viewModel.viewDidLoad(imdbId: imdbID ?? "")
     }
 }
 
@@ -247,5 +253,25 @@ extension DetailViewController: DetailViewInterface {
         languageLabel.text = "Language: \(model.language)"
         genreArray = genreSplit(text: model.genre)
         plotTextView.text = model.plot
+    }
+    
+    func showErrorAlert(title: String, description: String, actions: AlertAction) {
+        showCustomAlert(title: title, message: description, actions: actions)
+    }
+    
+    func backToHomeScreen() {
+        closeView()
+    }
+
+    func dissmissIndicatorForApiRequestCompleted() {
+        DispatchQueue.main.async {
+            self.dismissLoadingView()
+        }
+    }
+    
+    func loadIndicatorForApiRequestCompleted() {
+        DispatchQueue.main.async {
+            self.showLoadingView()
+        }
     }
 }

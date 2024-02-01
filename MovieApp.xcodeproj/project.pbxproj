@@ -19,6 +19,7 @@
 		E87D1DB6290589310028EDA9 /* MovieAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DB5290589310028EDA9 /* MovieAppTests.swift */; };
 		E87D1DC129058D2C0028EDA9 /* MockHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87D1DC029058D2C0028EDA9 /* MockHomeViewController.swift */; };
 		E88293E62932240500C769A1 /* MockSearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88293E52932240500C769A1 /* MockSearchList.swift */; };
+		E886EE362B4EC16500357A90 /* MyCustomConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = E886EE352B4EC16500357A90 /* MyCustomConstraints */; };
 		E8B362752930D7640062376F /* SplashViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B362742930D7640062376F /* SplashViewControllerTest.swift */; };
 		E8B362772930D9150062376F /* MockSplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B362762930D9150062376F /* MockSplashViewModel.swift */; };
 		E8DE8F0A28FD4A470037598C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DE8F0928FD4A470037598C /* AppDelegate.swift */; };
@@ -120,6 +121,7 @@
 				E8DE8F2928FD71CC0037598C /* Kingfisher in Frameworks */,
 				E8DE8F2328FD717C0037598C /* SnapKit in Frameworks */,
 				E8303E6B2B309C0B004C51CA /* FirebaseCrashlytics in Frameworks */,
+				E886EE362B4EC16500357A90 /* MyCustomConstraints in Frameworks */,
 				E8DE8F3328FD8FB60037598C /* FirebaseAnalytics in Frameworks */,
 				E8DE8F2628FD718C0037598C /* Alamofire in Frameworks */,
 				E8DE8F3528FD8FB60037598C /* FirebaseRemoteConfig in Frameworks */,
@@ -369,6 +371,7 @@
 				E8DE8F3428FD8FB60037598C /* FirebaseRemoteConfig */,
 				E87D1DA72904406E0028EDA9 /* FirebaseMessaging */,
 				E8303E6A2B309C0B004C51CA /* FirebaseCrashlytics */,
+				E886EE352B4EC16500357A90 /* MyCustomConstraints */,
 			);
 			productName = MovieApp;
 			productReference = E8DE8F0628FD4A470037598C /* MovieApp.app */;
@@ -408,6 +411,7 @@
 				E8DE8F2728FD71CC0037598C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E8DE8F3128FD8FB60037598C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E886EE342B4EC16500357A90 /* XCRemoteSwiftPackageReference "MyCustomConstraints" */,
 			);
 			productRefGroup = E8DE8F0728FD4A470037598C /* Products */;
 			projectDirPath = "";
@@ -786,6 +790,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		E886EE342B4EC16500357A90 /* XCRemoteSwiftPackageReference "MyCustomConstraints" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MineRala/MyCustomConstraints.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		E8DE8F2128FD717C0037598C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -830,6 +842,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E87D1DA62904406E0028EDA9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		E886EE352B4EC16500357A90 /* MyCustomConstraints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E886EE342B4EC16500357A90 /* XCRemoteSwiftPackageReference "MyCustomConstraints" */;
+			productName = MyCustomConstraints;
 		};
 		E8DE8F2228FD717C0037598C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

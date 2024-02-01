@@ -10,8 +10,9 @@ import UIKit
 import SnapKit
 
 fileprivate var containerView: UIView!
+typealias AlertAction = [(String, UIAlertAction.Style, () -> Void)]
 
-//MARK: - Toast
+// MARK: - Toast
 extension UIViewController {
     func showToast(title:String ,text:String, delay:Int) -> Void {
         let alert = UIAlertController(title: title, message: text, preferredStyle: .alert)
@@ -23,7 +24,32 @@ extension UIViewController {
     }
 }
 
-//MARK: - Loding View
+// MARK: - Action
+extension UIViewController {
+    func showCustomAlert(title: String, message: String? = nil, actions: AlertAction) {
+        // Alert oluşturma
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        // Action'ları alert controller'a ekleme
+        for actionData in actions {
+            let action = UIAlertAction(
+                title: actionData.0,
+                style: actionData.1,
+                handler: { _ in actionData.2() }
+            )
+            alertController.addAction(action)
+        }
+        
+        // Alert'i gösterme
+        present(alertController, animated: true, completion: nil)
+        }
+}
+
+// MARK: - Loding View
 extension UIViewController {
     func showLoadingView() {
         containerView = UIView()
@@ -57,7 +83,7 @@ extension UIViewController {
     }
 }
 
-//MARK: - View Animation
+// MARK: - View Animation
 extension UIViewController {
     func openView(viewController: UIViewController) {
         let transition = CATransition()
